@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <link rel="stylesheet" href="styles.css">
 
     <title>
         <?= $title; ?>
@@ -21,5 +22,21 @@
     <link href="<?= base_url('assets/'); ?>css/sb-admin-2.min.css" rel="stylesheet">
 
 </head>
+<style>
+img{
+      width: 100%;
+    }
+  body {
+  background: url(assets/img/notes2.jpg); 
+  background-size: cover;
+  
+  background-position: center;
+  margin:0;
+  height: 100vh;
+}
+</style>
 
-<body class="bg-gradient-primary" background="assets/img/images.jpg">
+<body>
+    <!-- background= "<?=base_url('assets/img/notes.jpg');?>"-->
+        
+    

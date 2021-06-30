@@ -26,7 +26,7 @@
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                     <input type="password" class="form-control form-control-user" id="password1" name="password1" placeholder="Contraseña">
-                                    <?= form_error('password1', '<div class="alert alert-danger alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;  </button> <center><strong>Error! <br> </strong>', '  <br> El campo contraseña es obligatorio. </div></center>'); ?>
+                                    <?= form_error('password1', '<div class="alert alert-danger alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;  </button> <center><strong>Error! <br> </strong>', '</div></center>'); ?>
                                     <!-- <?= form_error('password1', '<small class="text-danger pl-3">', '</small>'); ?>-->
                                      <div class="col">
                                                 <button id="show_password" class="btn btn-success" type="button" onclick="mostrarPassword1()"><span class="fa fa-eye-slash icon1"></span>
@@ -38,7 +38,7 @@
 
                                 <div class="col-sm-6">
                                     <input type="password" class="form-control form-control-user" id="password2" name="password2" placeholder="Repita contraseña">
-                                    <?= form_error('password2', '<div class="alert alert-danger alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;  </button> <center><strong>Error! <br> </strong>', '  <br> La contraseña no es semejante. </div></center>'); ?>
+                                    <?= form_error('password2', '<div class="alert alert-danger alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;  </button> <center><strong>Error! <br> </strong>', '</div></center>'); ?>
                                     <!--<?= form_error('password2', '<small class="text-danger pl-3">', '</small>'); ?>-->
                                      <div class="col">
                                                 <button id="show_password" class="btn btn-success" type="button" onclick="mostrarPassword2()"><span class="fa fa-eye-slash icon1"></span>

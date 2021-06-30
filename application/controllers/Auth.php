@@ -59,7 +59,40 @@ class Auth extends CI_Controller
     }
 
 
-   
+    public function resgistro()
+    {
+        $this->form_validation->set_rules('name', 'Name', 'required|trim');
+        $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email|is_unique[user.email]', ['is_unique' => 'El correo ya esta registrado!']);
+        $this->form_validation->set_rules('password1', 'Password', 'required|trim|min_length[2]|matches[password2]');
+        $this->form_validation->set_rules('password2', 'Password', 'required|trim|min_length[2]|matches[password1]');
+        if ($this->form_validation->run() == false) {
+            $data['title'] = 'Registro';
+            $this->load->view('templates/auth_header', $data);
+            $this->load->view('auth/resgistro');
+            $this->load->view('templates/auth_footer');
+        } else {
+            $email = $this->input->post('email', true);
+            $data = [
+                'name' => htmlspecialchars($this->input->post('name')),
+                'email' => htmlspecialchars($email),
+                'image' => 'default.jpg',
+                'password' => password_hash($this->input->post('password1'), PASSWORD_DEFAULT),
+                'role_id' => 2,
+                'is_active' => 0,
+            ];
+            $token = base64_encode(random_bytes(32));
+            $user_token = [
+                'email'        => $email,
+                'token'        => $token,
+                'date_created' => time()
+            ];
+            $this->db->insert('user', $data);
+            $this->db->insert('user_token', $user_token);
+            $this->_sendEmail($token, 'verify');
+            $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><center><strong>¡Felicidades ya estas registrado! </strong> <br> Por favor activar token. </div></center>');
+            redirect('auth');
+        }
+    }
 
     private function _sendEmail($token, $type)
     {
@@ -90,7 +123,6 @@ class Auth extends CI_Controller
             die;
         }
     }
-
 
     public function verify()
     {
@@ -130,48 +162,10 @@ class Auth extends CI_Controller
         $this->session->set_flashdata('message', '<div class="alert alert-primary alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><center><strong>¡Cerraste tu cuenta! </strong> <br> Vuelve pronto te extrañamos. </div></center>');
         redirect('auth');
     }
-
     public function bloqueo()
     {
         $this->load->view('auth/bloqueo');
     }
-
-    public function resgistro()
-    {
-        $this->form_validation->set_rules('name', 'Name', 'required|trim');
-        $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email|is_unique[user.email]', ['is_unique' => 'El correo ya esta registrado!']);
-        $this->form_validation->set_rules('password1', 'Password', 'required|trim|min_length[5]|matches[password2]');
-        $this->form_validation->set_rules('password2', 'Password', 'required|trim|min_length[5]|matches[password1]');
-        if ($this->form_validation->run() == false) {
-            $data['title'] = 'Registro';
-            $this->load->view('templates/auth_header', $data);
-            $this->load->view('auth/resgistro');
-            $this->load->view('templates/auth_footer');
-        } else {
-            $email = $this->input->post('email', true);
-            $data = [
-                'name' => htmlspecialchars($this->input->post('name')),
-                'email' => htmlspecialchars($email),
-                'image' => 'default.jpg',
-                'password' => password_hash($this->input->post('password1'), PASSWORD_DEFAULT),
-                'role_id' => 2,
-                 'is_active' => 0,
-            ];
-            $token = base64_encode(random_bytes(32));
-            $user_token = [
-                'email'        => $email,
-                'token'        => $token,
-                'date_created' => time()
-            ];
-            $this->db->insert('user', $data);
-            $this->db->insert('user_token', $user_token);
-            $this->_sendEmail($token, 'verify');
-            $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><center><strong>¡Felicidades ya estas registrado! </strong> <br> Por favor activar token. </div></center>');
-            redirect('auth');
-        }
-    }
-
-
 
     public function recuperarcontra()
     {
@@ -201,6 +195,7 @@ class Auth extends CI_Controller
             }
         }
     }
+
     public function restablecercontra()
     {
         $email = $this->input->get('email');
@@ -220,6 +215,7 @@ class Auth extends CI_Controller
             redirect('auth');
         }
     }
+
     public function cambiarcontra()
     {
         if (!$this->session->userdata('reset_email')) {
@@ -243,6 +239,4 @@ class Auth extends CI_Controller
             redirect('auth');
         }
     }
-    
-    
 }

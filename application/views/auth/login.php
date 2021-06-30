@@ -25,14 +25,7 @@
                                     <div class="form-group">
                                         <input type="password" id="password" name="password" class="form-control form-control-user" placeholder="Escribe tu contraseña">
                                         <?= form_error('password', '<div class="alert alert-danger alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;  </button> <center><strong>Error! <br> </strong>', ' </div></center>'); ?>
-                                       
                                     </div>
-                                     <div class="col">
-                                                <button id="show_password" class="btn btn-success" type="button" onclick="mostrarPassword()"><span class="fa fa-eye-slash icon1"></span>
-                                                </button>
-                                        </div>
-                                    </form>
-                                </br>
                                     <button type="submit" class="btn btn-success btn-user btn-block">
                                         Iniciar sesión
                                     </button>
@@ -72,16 +65,3 @@
     </div>
 
 </div>
-
-<script type="text/javascript">
-    function mostrarPassword() {
-        var cambio1 = document.getElementById("password");
-        if (cambio1.type == "password") {
-            cambio1.type = "text";
-            $('.icon1').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
-        } else {
-            cambio1.type = "password";
-            $('.icon1').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
-        }
-    }
-</script>

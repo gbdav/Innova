@@ -170,6 +170,37 @@ class Auth extends CI_Controller
             redirect('auth');
         }
     }
+
+
+
+    public function recuperarcontra()
+    {
+        $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
+        if ($this->form_validation->run() == false) {
+            $data['title'] = 'Olvidé mi Contraseña';
+            $this->load->view('templates/auth_header', $data);
+            $this->load->view('auth/recuperarcontra');
+            $this->load->view('templates/auth_footer');
+        } else {
+            $email = $this->input->post('email');
+            $user = $this->db->get_where('user', ['email' => $email, 'is_active' => 1])->row_array();
+            if ($user) {
+                $token = base64_encode(random_bytes(32));
+                $user_token = [
+                    'email'        => $email,
+                    'token'        => $token,
+                    'date_created' => time()
+                ];
+                $this->db->insert('user_token', $user_token);
+                $this->_sendEmail($token, 'forgot');
+                $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><center><strong>¡Porfavor checar tu correo electronico! </strong> <br> Ya se envío un correo electronico para restablecer tu contraseña. </div></center>');
+                redirect('auth/recuperarcontra');
+            } else {
+                $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><center><strong>¡Correo no resgistrado o activado! </strong> <br> Favor de verificar. </div></center>');
+                redirect('auth/recuperarcontra');
+            }
+        }
+    }
     
     
 

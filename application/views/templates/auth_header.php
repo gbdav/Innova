@@ -8,7 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="assets/css/estilos.css">
+    <link src="<?= base_url();?>assets/css/estilos.css", rel="stylesheet" type="text/css" >
+
 
     <title>
         <?= $title; ?>
@@ -23,20 +25,16 @@
 
 </head>
 <style>
-img{
-      width: 100%;
-    }
-  body {
-  background: url(assets/img/notes2.jpg); 
-  background-size: cover;
-  
-  background-position: center;
-  margin:0;
-  height: 100vh;
+body {
+background-image:url("https://i.blogs.es/ee0260/appsnotas/1366_2000.jpg"); 
+background-size: cover;
+background-position: center;
+margin:0;
+height: 100vh;
 }
 </style>
 
 <body>
-    <!-- background= "<?=base_url('assets/img/notes.jpg');?>"-->
+    
         
     

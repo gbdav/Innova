@@ -1,4 +1,4 @@
-<div class="container" align="center">
+<div class="container">
 
     <!-- Outer Row -->
     <div class="row justify-content-center">

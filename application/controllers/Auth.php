@@ -220,11 +220,29 @@ class Auth extends CI_Controller
             redirect('auth');
         }
     }
+    public function cambiarcontra()
+    {
+        if (!$this->session->userdata('reset_email')) {
+            redirect('auth');
+        }
+        $this->form_validation->set_rules('password1', 'Password', 'trim|required|min_length[3]|matches[password2]');
+        $this->form_validation->set_rules('password2', 'Repeat Password', 'trim|required|min_length[3]|matches[password1]');
+        if ($this->form_validation->run() == false) {
+            $data['title'] = 'Cambiar Contraseña';
+            $this->load->view('templates/auth_header', $data);
+            $this->load->view('auth/cambiarcontra');
+            $this->load->view('templates/auth_footer');
+        } else {
+            $password = password_hash($this->input->post('password1'), PASSWORD_DEFAULT);
+            $email = $this->session->userdata('reset_email');
+            $this->db->set('password', $password);
+            $this->db->where('email', $email);
+            $this->db->update('user');
+            $this->session->unset_userdata('reset_email');
+            $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><center><strong>¡La contraseña ha sido cambiada! </strong> <br> Felicidades. </div></center>');
+            redirect('auth');
+        }
+    }
     
-
-    
-
-    
-
     
 }

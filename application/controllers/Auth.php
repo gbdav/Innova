@@ -11,8 +11,14 @@ class Auth extends CI_Controller
     }
     public function index()
     {
-        $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
-        $this->form_validation->set_rules('password', 'Password', 'trim|required');
+        $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email', 
+          array(
+                'required'      => 'Necesitas poner un Correo electrónico existente')
+    );
+        $this->form_validation->set_rules('password', 'Password', 'trim|required',
+            array(
+                'required'      => 'Necesitas poner una contraseña')
+    );
         if ($this->form_validation->run() == false) {
             $data['title'] = 'Inicio de Sesión';
             $this->load->view('templates/auth_header', $data);
@@ -67,10 +73,26 @@ class Auth extends CI_Controller
 
     public function resgistro()
     {
-        $this->form_validation->set_rules('name', 'Name', 'required|trim');
-        $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email|is_unique[user.email]', ['is_unique' => 'El correo ya esta registrado!']);
-        $this->form_validation->set_rules('password1', 'Password', 'required|trim|min_length[2]|matches[password2]');
-        $this->form_validation->set_rules('password2', 'Password', 'required|trim|min_length[2]|matches[password1]');
+        $this->form_validation->set_rules('name', 'Name', 'required|trim',
+    array(
+                'required'      => 'Necesitas poner un Nombre'
+            ));
+        $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email|is_unique[user.email]', array(
+                'required'      => 'Necesitas poner un Correo electrónico',
+                'is_unique'      => 'El correo ya esta registrado'
+            ));
+        $this->form_validation->set_rules('password1', 'Password', 'required|trim|min_length[6]|matches[password2]',
+    array(
+                'required'      => 'Necesitas poner una contraseña',
+                'min_length'     => 'Contraseña mayor a 6 caracteres',
+                'matches'     => 'La contraseña no es igual'
+            ));
+        $this->form_validation->set_rules('password2', 'Password', 'required|trim|min_length[6]|matches[password1]',
+    array(
+                'required'      => 'Necesitas poner una contraseña',
+                'min_length'     => 'Contraseña mayor a 6 caracteres',
+                'matches'     => 'La contraseña no es igual'
+            ));
         if ($this->form_validation->run() == false) {
             $data['title'] = 'Registro';
             $this->load->view('templates/auth_header', $data);
@@ -175,7 +197,10 @@ class Auth extends CI_Controller
 
     public function recuperarcontra()
     {
-        $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
+        $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email',
+    array(
+                'required'      => 'Necesitas poner un Correo electrónico existente',
+            ));
         if ($this->form_validation->run() == false) {
             $data['title'] = 'Olvidé mi Contraseña';
             $this->load->view('templates/auth_header', $data);
@@ -227,8 +252,18 @@ class Auth extends CI_Controller
         if (!$this->session->userdata('reset_email')) {
             redirect('auth');
         }
-        $this->form_validation->set_rules('password1', 'Password', 'trim|required|min_length[3]|matches[password2]');
-        $this->form_validation->set_rules('password2', 'Repeat Password', 'trim|required|min_length[3]|matches[password1]');
+        $this->form_validation->set_rules('password1', 'Password', 'trim|required|min_length[6]|matches[password2]',
+    array(
+                'required'      => 'Necesitas poner una contraseña',
+                'min_length'     => 'Contraseña mayor a 6 caracteres',
+                'matches'     => 'La contraseña no es igual'
+            ));
+        $this->form_validation->set_rules('password2', 'Repeat Password', 'trim|required|min_length[6]|matches[password1]',
+    array(
+                'required'      => 'Necesitas poner una contraseña',
+                'min_length'     => 'Contraseña mayor a 6 caracteres',
+                'matches'     => 'La contraseña no es igual'
+            ));
         if ($this->form_validation->run() == false) {
             $data['title'] = 'Cambiar Contraseña';
             $this->load->view('templates/auth_header', $data);

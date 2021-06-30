@@ -8,6 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <link rel="stylesheet" href="assets/css/estilos.css">
+    <link src="<?= base_url();?>assets/css/estilos.css", rel="stylesheet" type="text/css" >
+
 
     <title>
         <?= $title; ?>
@@ -21,5 +24,17 @@
     <link href="<?= base_url('assets/'); ?>css/sb-admin-2.min.css" rel="stylesheet">
 
 </head>
+<style>
+body {
+background-image:url("https://i.blogs.es/ee0260/appsnotas/1366_2000.jpg"); 
+background-size: cover;
+background-position: center;
+margin:0;
+height: 100vh;
+}
+</style>
 
-<body class="bg-gradient-primary" background="assets/img/images.jpg">
+<body>
+    
+        
+    

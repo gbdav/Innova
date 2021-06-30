@@ -1,0 +1,7 @@
+.fondo {
+background-image:url("/assets/img/notes2.jpg"); 
+background-size: cover;
+background-position: center;
+margin:0;
+height: 100vh;
+}

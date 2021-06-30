@@ -91,6 +91,7 @@ class Auth extends CI_Controller
         }
     }
 
+
     public function verify()
     {
         $email = $this->input->get('email');
@@ -128,6 +129,11 @@ class Auth extends CI_Controller
         $this->session->unset_userdata('role_id');
         $this->session->set_flashdata('message', '<div class="alert alert-primary alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><center><strong>¡Cerraste tu cuenta! </strong> <br> Vuelve pronto te extrañamos. </div></center>');
         redirect('auth');
+    }
+
+    public function bloqueo()
+    {
+        $this->load->view('auth/bloqueo');
     }
     
     

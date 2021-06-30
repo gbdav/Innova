@@ -155,7 +155,7 @@ class Auth extends CI_Controller
                 'image' => 'default.jpg',
                 'password' => password_hash($this->input->post('password1'), PASSWORD_DEFAULT),
                 'role_id' => 2,
-                'is_active' => 0,
+                 'is_active' => 0,
             ];
             $token = base64_encode(random_bytes(32));
             $user_token = [
@@ -201,7 +201,25 @@ class Auth extends CI_Controller
             }
         }
     }
-    
+    public function restablecercontra()
+    {
+        $email = $this->input->get('email');
+        $token = $this->input->get('token');
+        $user = $this->db->get_where('user', ['email' => $email])->row_array();
+        if ($user) {
+            $user_token = $this->db->get_where('user_token', ['token' => $token])->row_array();
+            if ($user_token) {
+                $this->session->set_userdata('reset_email', $email);
+                $this->cambiarcontra();
+            } else {
+                $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><center><strong>¡Restablecer contraseña falló! </strong> <br> Token incorrecto. </div></center>');
+                redirect('auth');
+            }
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><center><strong>¡Restablecer contraseña falló! </strong> <br> Correo electronico incorrecto. </div></center>');
+            redirect('auth');
+        }
+    }
     
 
     

@@ -37,16 +37,13 @@ class Auth extends CI_Controller
         $email = $this->input->post('email');
         $password = $this->input->post('password');
         $user = $this->db->get_where('user', ['email' => $email])->row_array();
-<<<<<<< HEAD
        
         
         if ($user) {
-=======
         $cook = $user['email'];
 
     if ($user) {
         if(isset($_COOKIE['block'.$cook])){
->>>>>>> a1cff88b5d1ac0fb7d83926319d6a8e8c199c54f
             if ($user['is_active'] == 1) {
                 // checa el password
                 if (password_verify($password, $user['password'])) {

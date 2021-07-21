@@ -14,6 +14,9 @@
                         <div class="col-lg">
                             <div class="p-5">
                                 <div class="text-center">
+                                <center>
+                                    <img src="<?= base_url('assets/img/logo1.jpg') ?> "/>
+                                </center>
                                     <h1 class="h4 text-gray-900 mb-4">Inicio de sesión</h1>
                                 </div>
                                 <?= $this->session->flashdata('message'); ?>

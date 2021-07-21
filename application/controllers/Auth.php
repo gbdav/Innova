@@ -24,6 +24,8 @@ class Auth extends CI_Controller
             $this->load->view('templates/auth_header', $data);
             $this->load->view('auth/login');
             $this->load->view('templates/auth_footer');
+
+        
         } else {
             //validar el acceso
             $this->_Iniciodesesion();
@@ -35,21 +37,36 @@ class Auth extends CI_Controller
         $email = $this->input->post('email');
         $password = $this->input->post('password');
         $user = $this->db->get_where('user', ['email' => $email])->row_array();
-
+       
+        
         if ($user) {
             if ($user['is_active'] == 1) {
                 // checa el password
                 if (password_verify($password, $user['password'])) {
+                    
                     $data = [
                         'email' => $user['email'],
                         'role_id' => $user['role_id']
                     ];
-                    $this->session->set_userdata($data);
+                    
                     if ($user['role_id'] == 1) {
-                        redirect('admin');
-                    } else {
-                        redirect('user');
+                        if( $this->session->userdata( "email" ) == NULL ){
+                            $this->session->set_userdata($data);
+                            redirect('admin');
+                        }else{
+                            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><center><strong>¡Usted tiene una sesion activa! </strong></div></center>');
+                            redirect('auth');
+                       }
+                    } else if($user['role_id'] == 2){
+                        if( $this->session->userdata( "email" ) == NULL ){
+                            $this->session->set_userdata($data);
+                            redirect('user');
+                        }else{
+                            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><center><strong>¡Usted tiene una sesion activa! </strong></div></center>');
+                            redirect('auth');
+                        }
                     }
+                  
                 } else {
                     $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><center><strong>¡Contraseña incorrecta! </strong>  <br> Por favor de ingresar la contraseña correcta. </div></center>');
                     redirect('auth');
@@ -62,6 +79,7 @@ class Auth extends CI_Controller
             $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><center><strong>¡El correo es inexistente! </strong> <br> Favor de registrarse. </div></center>');
             redirect('auth');
         }
+      
     }
 
 
@@ -179,6 +197,7 @@ class Auth extends CI_Controller
 
     public function cerrarsesion()
     {
+        
         $this->session->unset_userdata('email');
         $this->session->unset_userdata('role_id');
         $this->session->set_flashdata('message', '<div class="alert alert-primary alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><center><strong>¡Cerraste tu cuenta! </strong> <br> Vuelve pronto te extrañamos. </div></center>');
@@ -274,4 +293,6 @@ class Auth extends CI_Controller
             redirect('auth');
         }
     }
+
+    
 }

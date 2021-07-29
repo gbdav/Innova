@@ -81,7 +81,7 @@ AND `user_sub_menu`. `is_active` = 1
         </li>
         <hr class="sidebar-divider">-->
     <li class="nav-item">
-        <a class="nav-link" href="<?= base_url('auth/cerrarsesion/'); ?>">
+        <a class="nav-link" href="<?= base_url('auth/cerrarsesion/'); ?>" Post="<?= $user['email']; ?>">
             <i class="fas fa-sign-out-alt"></i>
             <span>Cerrar sesión</span></a>
     </li>

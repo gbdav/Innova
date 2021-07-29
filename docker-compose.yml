@@ -1,0 +1,29 @@
+version: "3"
+ 
+services:
+  miservicio_mysql:
+    image: mysql:8.0
+    environment:
+      - MYSQL_DATABASE=innovanotes
+      - MYSQL_ROOT_PASSWORD=123barcenas
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=123barcenas
+    volumes:
+      # Montamos un volumen para MySQL para no perder los datos de bd
+      - ./volumenes/mysql:/var/lib/mysql
+    expose:
+      - 3307
+    ports:
+      - 3307:3307
+   
+  miservicio_php:
+    image: php:7.3-apache
+    volumes:
+      # Montamos nuestra web desde fuera en el directorio web del contenedor
+      - .\xampp\htdocs\InnovaNotes:/var/www/html
+    expose:
+      - 80
+    ports:
+      - 80:80
+    links: 
+      - miservicio_mysql

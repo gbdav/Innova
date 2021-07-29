@@ -37,13 +37,13 @@ class Auth extends CI_Controller
         $email = $this->input->post('email');
         $password = $this->input->post('password');
         $user = $this->db->get_where('user', ['email' => $email])->row_array();
-       
         
-        if ($user) {
-        $cook = $user['email'];
+        
+        //if ($user) {
+        //$cook = $user['email'];
 
     if ($user) {
-        if(isset($_COOKIE['block'.$cook])){
+        //if(isset($_COOKIE['block'.$cook])){
             if ($user['is_active'] == 1) {
                 // checa el password
                 if (password_verify($password, $user['password'])) {
@@ -52,29 +52,17 @@ class Auth extends CI_Controller
                         'email' => $user['email'],
                         'role_id' => $user['role_id']
                     ];
-                    
                     if ($user['role_id'] == 1) {
-                        if( $this->session->userdata( "email" ) == NULL ){
                             $this->session->set_userdata($data);
                             redirect('admin');
-                        }else{
-                            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><center><strong>¡Usted tiene una sesion activa! </strong></div></center>');
-                            redirect('auth');
-                       }
-                    } else if($user['role_id'] == 2){
-                        if( $this->session->userdata( "email" ) == NULL ){
+                    }else{ 
                             $this->session->set_userdata($data);
                             redirect('user');
-                        }else{
-                            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><center><strong>¡Usted tiene una sesion activa! </strong></div></center>');
-                            redirect('auth');
-                        }
-                    }
-                  
-                } else {
-                    $this->db->set('count', 'count+1', FALSE);
-                    $this->db->where('id', $user['id']);
-                    $this->db->update('user');
+                        } 
+               }else {
+                    //$this->db->set('count', 'count+1', FALSE);
+                    //$this->db->where('id', $user['id']);
+                    //$this->db->update('user');
                     $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><center><strong>¡Te haz equivocado 3 veces! </strong>  <br> Por favor de revisar los datos de autenticacion. </div></center>');
                     redirect('auth');
                 }
@@ -82,14 +70,12 @@ class Auth extends CI_Controller
                 $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><center><strong>¡El correo es esta inactivo! </strong> <br> Por favor de activarlo desde el correo que ingresaste. </div></center>');
                 redirect('auth');
             }
-        }
         } else {
             $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><center><strong>¡El correo es inexistente! </strong> <br> Favor de registrarse. </div></center>');
             redirect('auth');
-        }
+           }
+    }       
       
-    }
-
 
     public function resgistro()
     {
@@ -205,10 +191,9 @@ class Auth extends CI_Controller
 
     public function cerrarsesion()
     {
-        
         $this->session->unset_userdata('email');
         $this->session->unset_userdata('role_id');
-        $this->session->set_flashdata('message', '<div class="alert alert-primary alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><center><strong>¡Cerraste tu cuenta! </strong> <br> Vuelve pronto te extrañamos. </div></center>');
+        $this->session->set_flashdata('message', '<div class="alert alert-primary alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><center><strong>¡Cerraste tu cuenta! </strong> <br> Vuelve pronto te extrañaremos. </div></center>');
         redirect('auth');
     }
     public function bloqueo()
@@ -302,5 +287,4 @@ class Auth extends CI_Controller
         }
     }
 
-    
 }

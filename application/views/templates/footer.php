@@ -31,8 +31,10 @@
                        </div>
                        <div class="modal-body">¿Seguro que quieres cerrar sesión?</div>
                        <div class="modal-footer">
-                           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-                           <a class="btn btn-primary" href="<?= base_url('auth/cerrarsesion/'); ?>">Cerrar sesión</a>
+                           <button class="btn btn-secondary" type="button" data-dismiss="modal"
+                            onclick="click_borrar('<?= $user['name']; ?>')">Cancelar</button>
+                           <a class="btn btn-primary" href="<?= base_url('auth/cerrarsesion/'); ?>"
+                           Post="<?= $user['email']; ?>">Cerrar sesión</a>
                        </div>
                    </div>
                </div>

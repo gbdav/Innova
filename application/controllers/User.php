@@ -27,52 +27,7 @@ class User extends CI_Controller
             redirect('error_404');
         }
     }
-    public function EditarPerfil()
-    {
-        if ($this->session->userdata("email") != NULL) {
-            $data['title'] = 'Editar perfil';
-            $data['user'] = $this->db->get_where('user', ['email' =>
-            $this->session->userdata('email')])->row_array();
-            /*echo 'Jorge' . $data['usuario']['nombre'];*/
-            $this->load->view('templates/header', $data);
-            $this->load->view('templates/sidebar', $data);
-            $this->load->view('templates/topbar', $data);
-            $this->load->view('usuario/index', $data);
-            $this->load->view('templates/footer');
-        }else{
-            redirect('error_404');
-        }
-    }
-    public function misTareas()
-    {
-        if ($this->session->userdata("email") != NULL) {
-            $data['title'] = 'Mis tareas';
-            $data['user'] = $this->db->get_where('user', ['email' =>
-            $this->session->userdata('email')])->row_array();
-            /*echo 'Jorge' . $data['usuario']['nombre'];*/
-            $this->load->view('templates/header', $data);
-            $this->load->view('templates/sidebar', $data);
-            $this->load->view('templates/topbar', $data);
-            $this->load->view('usuario/index', $data);
-            $this->load->view('templates/footer');
-        }else{
-            redirect('error_404');
-        }
-    }
-    public function MisProyectos()
-    {
-        if ($this->session->userdata("email") != NULL) {
-            $data['title'] = 'Mis proyectos';
-            $data['user'] = $this->db->get_where('user', ['email' =>
-            $this->session->userdata('email')])->row_array();
-            /*echo 'Jorge' . $data['usuario']['nombre'];*/
-            $this->load->view('templates/header', $data);
-            $this->load->view('templates/sidebar', $data);
-            $this->load->view('templates/topbar', $data);
-            $this->load->view('usuario/index', $data);
-            $this->load->view('templates/footer');
-        }else{
-            redirect('error_404');
-        }
-    }
+    
+   
+   
 }

@@ -29,7 +29,7 @@
                                         <input type="password" id="password" name="password" class="form-control form-control-user" placeholder="Escribe tu contraseña">
                                        <?= form_error('password', '<div class="alert alert-danger alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;  </button> <center><strong>Error! <br> </strong>', ' </div></center>'); ?>
                                     </div>
-                                    <button type="submit" class="btn btn-success btn-user btn-block">
+                                    <button type="submit" class="btn btn-success btn-user btn-block" id="entrar">
                                         Iniciar sesión
                                     </button>
 

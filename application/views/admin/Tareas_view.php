@@ -5,14 +5,14 @@
     <h1 class="h3 mb-4 text-gray-800"><?= $title; ?></h1>
 
     <div class="row-right">
-        <BUTTON 
+    <BUTTON 
             class="btn btn-light"
             data-toggle="modal" 
-            data-target="#modal-agregar"
+            data-target="#modal-actualizar"
             onclick=""><I
             class="fas fa-plus"
             ></I>
-                Agregar nuevo proyecto
+                Agregar nueva tarea
         </BUTTON>
     </div> 
 </br> 
@@ -20,13 +20,13 @@
                 <div class="row">
                     <div class="col col-sm-12">
                     <?php
-                        $role_id = $this->session->userdata('role_id');
+                        $email = $this->session->userdata('email');
                         $querytabla= "SELECT *FROM project";
                         $tabla = $this->db->query($querytabla)->result_array();
                     ?>
-                        <table class="table table-hove" id="tabla-empleados">
+                        <table class="table table-hove" id="tabla-proyectos">
                             <TR class="bg-Active">
-                            <th class="text-center">ID</th>
+                            <th class="text-center">usuario</th>
                             <th class="text-center">Nombre</th>
                             <th class="text-center">DESCRIPCION</th>
                             <th class="text-center">FECHA INICIO</th>
@@ -35,26 +35,29 @@
                         </tr>
                         <?php foreach ($tabla as $p) : ?>
                         <tr>
-                            <td class="text-center"><?= $p['id']; ?></td>
-                            <td class="text-center"><?= $p['name_project']; ?></td>
+                            <td><?= $p['name_project']; ?></td>
+                            <td><?= $p['name_project']; ?></td>
                             <td><?= $p['description']; ?></td>
-                            <td class="text-center"><?= $p['date_ini']; ?></td>
+                            <td><?= $p['date_ini']; ?></td>
                             <!--<td class="text-center"><?= $p['id_user']; ?></td>-->
                             <td class="text-center">
                                 <BUTTON 
                                     class="btn btn-sm btn-info btn-edit"
+                                    data-ided="<?= $p['id']; ?>"
+                                    data-nameed="<?= $p['name_project']; ?>"
                                     data-toggle="modal" 
-                                    data-target="#modal-actualizar"
-                                    onclick=""><I
-                                    class="fas fa-edit"
-                                    ></I>
+                                    data-target="#modal-actualizar">
+                                    <I class="fas fa-edit"></I>
                                 </BUTTON>
                                 <BUTTON 
-                                    class="btn btn-sm btn-danger btn-delete"
+                                    class="btn btn-sm btn-danger btn-borrar"
+                                    data-id="<?= $p['id']; ?>"
+                                    data-name="<?= $p['name_project']; ?>"
                                     data-toggle="modal" 
-                                    data-target="#modal-borrar"><I
+                                    data-target="#modal-borrar"
+                                    ><I
                                     class="fas fa-trash"
-                                    onclick=""></I>
+                                    ></I>
                                 </BUTTON>
                             </td>
                         </tr>    
@@ -65,6 +68,8 @@
         </div>   
     
 </div>
+    
+
 <!-- /.container-fluid -->
        
 

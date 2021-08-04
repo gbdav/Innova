@@ -5,10 +5,14 @@
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--<META http-equiv="refresh" content="">-->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-
+    <SCRIPT>
+    var email = "<?= $user['email'] ?>"
+	var base_url = "<?= base_url() ?>";
+	</SCRIPT>
     <title><?= $title; ?></title>
 
     <!-- Custom fonts for this template-->

@@ -23,11 +23,40 @@ class User extends CI_Controller
             $this->load->view('templates/topbar', $data);
             $this->load->view('usuario/index', $data);
             $this->load->view('templates/footer');
-        }else{
+        } else {
             redirect('error_404');
         }
     }
-    
-   
-   
+    public function editar()
+    {
+        if ($this->session->userdata("email") != NULL) {
+            $data['title'] = 'Editar ';
+            $data['user'] = $this->db->get_where('user', ['email' =>
+            $this->session->userdata('email')])->row_array();
+            /*echo 'Jorge' . $data['usuario']['nombre'];*/
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar', $data);
+            $this->load->view('usuario/editar', $data);
+            $this->load->view('templates/footer');
+        } else {
+            redirect('error_404');
+        }
+    }
+    public function proyectos()
+    {
+        if ($this->session->userdata("email") != NULL) {
+            $data['title'] = 'Mis Proyectos ';
+            $data['user'] = $this->db->get_where('user', ['email' =>
+            $this->session->userdata('email')])->row_array();
+            /*echo 'Jorge' . $data['usuario']['nombre'];*/
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar', $data);
+            $this->load->view('usuario/proyectos_usuario_view', $data);
+            $this->load->view('templates/footer');
+        } else {
+            redirect('error_404');
+        }
+    }
 }

@@ -1,5 +1,5 @@
 $(document).ready(function() {
-
+    var hoy = new Date();
     $("#btn-borrar-confirma").click(function() {
         var id = $(this).attr("data-id");
         $.ajax({
@@ -19,11 +19,11 @@ $(document).ready(function() {
     });
 
     $("#btn-actualizar-confirma").click(function() {
-        var id = $("#modal-i").val();
+        var id = $(this).attr("data-id");
         var name_project = $("#modal-name_project").val();
         var description = $("#modal-des").val();
-        var date_ini = $("#modal-f").val();
-        var email = $("#modal-email").val();
+        var date_ini = hoy.getFullYear() + '-' + (hoy.getMonth() + 1) + '-' + hoy.getDate();
+        var email = $(this).attr("data-email");
         var accion = $(this).attr("data-accion");
         if (accion == "inserta") {
             $.ajax({
@@ -72,19 +72,13 @@ function click_borrar(id, name_project) {
     $("#modal-name_project").html(name_project);
 }
 
-function click_inserta(email) {
-    $("#modal-i").val("");
+function click_inserta() {
     $("#modal-name_project ").val("");
-    $("#modal-f").val("");
     $("#modal-des").val("");
-    $("#modal-email").val(email);
     $("#btn-actualizar-confirma").attr("data-accion", "inserta");
 }
 
-function click_actualizar(id, name_project, description, date_ini, email) {
-    $("#modal-i").val(id);
+function click_actualizar(name_project, description, ) {
     $("#modal-name_project").val(name_project);
     $("#modal-des").val(description);
-    $("#modal-f").val(date_ini);
-    $("#modal-email").val(email);
 }

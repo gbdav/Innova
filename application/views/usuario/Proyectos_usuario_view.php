@@ -4,21 +4,6 @@
     <!-- Page Heading -->
     <h1 class="h3 mb-4 text-gray-800"><?= $title; ?></h1>
    
-    <div class="row-right">
-        <BUTTON 
-            id="inserta"
-            class="btn btn-light"
-            data-email=" <?=$user['email']?>"
-            data-toggle="modal" 
-            data-target="#modal-actualizar"
-            onclick="click_inserta('<?=$user['email']?>')"><I
-            class="fas fa-plus"
-            ></I>
-                Agregar nuevo proyecto
-        </BUTTON>
-    </div>
-    <DIV id="mensaje" class="col col-md-5"></DIV> 
-</br> 
 <div class="container">	
                 <div class="row">
                     <div class="col col-sm-12">
@@ -29,15 +14,13 @@
                     ?>
                         <table class="table table-hove" id="tabla-proyectos">
                             <TR class="bg-Active">
-                            <th class="text-center">ID</th>
                             <th class="text-center">Nombre</th>
                             <th class="text-center">DESCRIPCION</th>
                             <th class="text-center">FECHA INICIO</th>
-                            <th class="text-center">ACCIONES</th>
+                            <th class="text-center">ACCION</th>
                         </tr>
                         <?php foreach ($tabla as $p) : ?>
                         <tr>
-                            <td class="text-center"><?= $p['id']; ?></td>
                             <td class="text-center"><?= $p['name_project']; ?></a></td>
                             <td><?= $p['description']; ?></td>
                             <td class="text-center"><?= $p['date_ini']; ?></td>
@@ -52,17 +35,6 @@
                                     data-target="#modal-actualizar"
                                     onclick="click_actualizar('<?= $p['id']; ?>','<?= $p['name_project']; ?>', '<?= $p['description']; ?>','<?= $p['date_ini']; ?>', '<?= $p['email']; ?>' )">
                                     <I class="fas fa-edit"></I>
-                                </BUTTON>
-                                <BUTTON 
-                                    class="btn btn-sm btn-danger btn-borrar"
-                                    data-id="<?= $p['id']; ?>"
-                                    data-name_project="<?= $p['name_project']; ?>"
-                                    data-toggle="modal" 
-                                    data-target="#modal-borrar"
-                                    onclick="click_borrar('<?= $p['id']; ?>', '<?= $p['name_project']; ?>')"
-                                    ><I
-                                    class="fas fa-trash"
-                                    ></I>
                                 </BUTTON>
                             </td>
                         </tr>    

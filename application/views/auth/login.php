@@ -13,6 +13,7 @@
                         <!--<div class="col-lg-6 d-none d-lg-block bg-login-image"></div>-->
                         <div class="col-lg">
                             <div class="p-5">
+                            <p align="center" class="image"><img src="<?= base_url() ?>assets/img/logo1.jpg"/></p>
                                 <div class="text-center">
                                     <h1 class="h4 text-gray-900 mb-4">Inicio de sesión</h1>
                                 </div>

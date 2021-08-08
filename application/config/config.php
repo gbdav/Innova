@@ -24,8 +24,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 |
 */
 $host = $_SERVER['HTTP_HOST'];
-$config['base_url'] = 'http://localhost/InnovaNotes/';
-//$config['base_url'] = 'http://'.$host .'/InnovaNotes/';
+//$config['base_url'] = 'http://localhost/InnovaNotes/';
+$config['base_url'] = 'http://'.$host .'/InnovaNotes/';
 
 /*
 |--------------------------------------------------------------------------

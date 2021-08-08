@@ -7,122 +7,178 @@ class Auth extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model( "Auth_model" );
         $this->load->library('form_validation');
     }
     public function index()
     {
-        $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email', 
-          array(
-                'required'      => 'Necesitas poner un Correo electrónico existente')
-    );
-        $this->form_validation->set_rules('password', 'Password', 'trim|required',
+        $this->form_validation->set_rules(
+            'email',
+            'Email',
+            'trim|required|valid_email',
             array(
-                'required'      => 'Necesitas poner una contraseña')
-    );
+                'required'      => 'Necesitas poner un Correo electrónico existente',
+                'valid_email'      => 'Necesitas poner un Correo electrónico existente',
+            )
+        );
+        $this->form_validation->set_rules(
+            'password',
+            'Password',
+            'trim|required',
+            array(
+                'required'      => 'Necesitas poner una contraseña',
+            )
+        );
         if ($this->form_validation->run() == false) {
             $data['title'] = 'Inicio de Sesión';
             $this->load->view('templates/auth_header', $data);
             $this->load->view('auth/login');
             $this->load->view('templates/auth_footer');
-
-        
         } else {
             //validar el acceso
             $this->_Iniciodesesion();
         }
     }
 
+    /* private function _Iniciodesesion()
+    {
+        $email = $this->input->post('email');
+        $password = $this->input->post('password');
+        $user = $this->db->get_where('user', ['email' => $email])->row_array();
+
+        if ($user) {
+            if ($user['is_active'] == 1) {
+                // checa el password
+                if (password_verify($password, $user['password'])) {
+                    $data = [
+                        'email' => $user['email'],
+                        'role_id' => $user['role_id']
+                    ];
+                    $this->session->set_userdata($data);
+                    if ($user['role_id'] == 1) {
+                        redirect('admin');
+                    } else {
+                        redirect('user');
+                    }
+                } else {
+                    $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><center><strong>¡Contraseña incorrecta! </strong>  <br> Por favor de ingresar la contraseña correcta. </div></center>');
+                    redirect('auth');
+                }
+            } else {
+                $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><center><strong>¡El correo es esta inactivo! </strong> <br> Por favor de activarlo desde el correo que ingresaste. </div></center>');
+                redirect('auth');
+            }
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><center><strong>¡El correo es inexistente! </strong> <br> Favor de registrarse. </div></center>');
+            redirect('auth');
+        }
+    }*/
     private function _Iniciodesesion()
     {
         date_default_timezone_set("America/Mexico_City");
         $email = $this->input->post('email');
         $password = $this->input->post('password');
         $user = $this->db->get_where('user', ['email' => $email])->row_array();
-        
-        
+
+
         if ($user) {
-                if ($user['is_active'] == 1 ) {
-                    $date = date("Y-m-d H:i:s");
-                    if($user['fecha'] < $date){
-                            // checa el password
-                        if (password_verify($password, $user['password'])) {
-                            $this->db->set('count', 'count=0', FALSE);
-                            $data = [
-                                'email' => $user['email'],
-                                'role_id' => $user['role_id']
-                            ];
-                            $this->session->set_userdata($data);
-                            if ($user['role_id'] == 1) {
-                                
-                                redirect('admin', $user);
-                            } else {
-                                redirect('user', $user);
-                            }
+            if ($user['is_active'] == 1) {
+                $date = date("Y-m-d H:i:s");
+                if ($user['fecha'] < $date) {
+                    // checa el password
+                    if (password_verify($password, $user['password'])) {
+                        $this->db->set('count', 'count=0', FALSE);
+                        $data = [
+                            'email' => $user['email'],
+                            'role_id' => $user['role_id']
+                        ];
+                        $this->session->set_userdata($data);
+                        if ($user['role_id'] == 1) {
+
+                            redirect('admin', $user);
                         } else {
-                            $date = date("Y-m-d H:i:s",strtotime(date("Y-m-d H:i:s")." +1 minutes"));
-                            $this->db->set('count', 'count+1', FALSE);
+                            redirect('user', $user);
+                        }
+                    } else {
+                        $date = date("Y-m-d H:i:s", strtotime(date("Y-m-d H:i:s") . " +1 minutes"));
+                        $this->db->set('count', 'count+1', FALSE);
+                        $this->db->set('fecha', $date);
+                        $this->db->where('id', $user['id']);
+                        $this->db->update('user');
+                        if ($user['count'] + 1 == 3) {
+                            $date = date("Y-m-d H:i:s", strtotime(date("Y-m-d H:i:s") . " +30 minutes"));
                             $this->db->set('fecha', $date);
                             $this->db->where('id', $user['id']);
                             $this->db->update('user');
-                            if($user['count']+1 == 3){
-                                $date = date("Y-m-d H:i:s",strtotime(date("Y-m-d H:i:s")." +30 minutes"));
-                                $this->db->set('fecha', $date);
-                                $this->db->where('id', $user['id']);
-                                $this->db->update('user');
-                                $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><center><strong>¡Te haz equivocado 3 veces! </strong>  <br> Por favor de revisar los datos de autenticacion. </div></center>');
+                            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><center><strong>¡Te haz equivocado 3 veces! </strong>  <br> Por favor de revisar los datos de autenticacion. </div></center>');
                             redirect('auth');
-                            }
-                            if($user['count']+1 == 5){
-                                $date = date("Y-m-d H:i:s",strtotime(date("Y-m-d H:i:s")." +3 years"));
-                                $this->db->set('fecha', $date);
-                                $this->db->where('id', $user['id']);
-                                $this->db->update('user');
-                                $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><center><strong>¡Te haz equivocado 5 veces! </strong>  <br> Contactar al administrador. </div></center>');
-                            redirect('auth');
-                            }
-                            
-                            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><center><strong>¡Contraseña incorrecta! </strong>  <br> Por favor de ingresar la contraseña correcta. </div></center>');
-                            redirect('auth');
-                            
                         }
-                    }else{
-                        $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><center><strong>¡El correo esta inactivo! </strong> <br> No ha transcurrido el tiempo necesario. </div></center>');
-                    redirect('auth');
-                    }      
+                        if ($user['count'] + 1 == 5) {
+                            $date = date("Y-m-d H:i:s", strtotime(date("Y-m-d H:i:s") . " +3 years"));
+                            $this->db->set('fecha', $date);
+                            $this->db->where('id', $user['id']);
+                            $this->db->update('user');
+                            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><center><strong>¡Te haz equivocado 5 veces! </strong>  <br> Contactar al administrador. </div></center>');
+                            redirect('auth');
+                        }
+
+                        $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><center><strong>¡Contraseña incorrecta! </strong>  <br> Tendras que esperarte 1 minuto. </div></center>');
+                        redirect('auth');
+                    }
                 } else {
-                    $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><center><strong>¡El correo es esta inactivo! </strong> <br> Por favor de activarlo desde el correo que ingresaste. </div></center>');
+                    $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><center><strong>¡El correo esta inactivo! </strong> <br> No ha transcurrido el tiempo necesario. </div></center>');
                     redirect('auth');
                 }
+            } else {
+                $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><center><strong>¡El correo es esta inactivo! </strong> <br> Por favor de activarlo desde el correo que ingresaste. </div></center>');
+                redirect('auth');
+            }
         } else {
             $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><center><strong>¡El correo es inexistente! </strong> <br> Favor de registrarse. </div></center>');
             redirect('auth');
         }
     }
-      
 
     public function resgistro()
     {
-        $this->form_validation->set_rules('name', 'Name', 'required|trim',
-    array(
+        $this->form_validation->set_rules(
+            'name',
+            'Nombre',
+            'required|trim',
+            array(
                 'required'      => 'Necesitas poner un Nombre'
-            ));
-        $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email|is_unique[user.email]', array(
+            )
+        );
+        $this->form_validation->set_rules(
+            'email',
+            'Email',
+            'required|trim|valid_email|is_unique[user.email]',
+            array(
                 'required'      => 'Necesitas poner un Correo electrónico',
-                'is_unique'      => 'El correo ya esta registrado'
-            ));
-        $this->form_validation->set_rules('password1', 'Password', 'required|trim|min_length[6]|matches[password2]',
-    array(
+                'is_unique'      => 'El correo ya esta registrado',
+                'valid_email'      => 'Necesitas poner un Correo electrónico existente'
+
+            )
+        );
+        $this->form_validation->set_rules(
+            'password1',
+            'Password',
+            'required|trim|min_length[6]|matches[password2]',
+            array(
                 'required'      => 'Necesitas poner una contraseña',
                 'min_length'     => 'Contraseña mayor a 6 caracteres',
                 'matches'     => 'La contraseña no es igual'
-            ));
-        $this->form_validation->set_rules('password2', 'Password', 'required|trim|min_length[6]|matches[password1]',
-    array(
+            )
+        );
+        $this->form_validation->set_rules(
+            'password2',
+            'Password',
+            'required|trim|min_length[6]|matches[password1]',
+            array(
                 'required'      => 'Necesitas poner una contraseña',
                 'min_length'     => 'Contraseña mayor a 6 caracteres',
                 'matches'     => 'La contraseña no es igual'
-            ));
+            )
+        );
         if ($this->form_validation->run() == false) {
             $data['title'] = 'Registro';
             $this->load->view('templates/auth_header', $data);
@@ -217,7 +273,7 @@ class Auth extends CI_Controller
     {
         $this->session->unset_userdata('email');
         $this->session->unset_userdata('role_id');
-        $this->session->set_flashdata('message', '<div class="alert alert-primary alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><center><strong>¡Cerraste tu cuenta! </strong> <br> Vuelve pronto te extrañaremos. </div></center>');
+        $this->session->set_flashdata('message', '<div class="alert alert-primary alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><center><strong>¡Cerraste tu cuenta! </strong> <br> Vuelve pronto te extrañamos. </div></center>');
         redirect('auth');
     }
     public function bloqueo()
@@ -227,10 +283,14 @@ class Auth extends CI_Controller
 
     public function recuperarcontra()
     {
-        $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email',
-    array(
+        $this->form_validation->set_rules(
+            'email',
+            'Email',
+            'trim|required|valid_email',
+            array(
                 'required'      => 'Necesitas poner un Correo electrónico existente',
-            ));
+            )
+        );
         if ($this->form_validation->run() == false) {
             $data['title'] = 'Olvidé mi Contraseña';
             $this->load->view('templates/auth_header', $data);
@@ -282,18 +342,26 @@ class Auth extends CI_Controller
         if (!$this->session->userdata('reset_email')) {
             redirect('auth');
         }
-        $this->form_validation->set_rules('password1', 'Password', 'trim|required|min_length[6]|matches[password2]',
-    array(
+        $this->form_validation->set_rules(
+            'password1',
+            'Password',
+            'trim|required|min_length[6]|matches[password2]',
+            array(
                 'required'      => 'Necesitas poner una contraseña',
                 'min_length'     => 'Contraseña mayor a 6 caracteres',
                 'matches'     => 'La contraseña no es igual'
-            ));
-        $this->form_validation->set_rules('password2', 'Repeat Password', 'trim|required|min_length[6]|matches[password1]',
-    array(
+            )
+        );
+        $this->form_validation->set_rules(
+            'password2',
+            'Repeat Password',
+            'trim|required|min_length[6]|matches[password1]',
+            array(
                 'required'      => 'Necesitas poner una contraseña',
                 'min_length'     => 'Contraseña mayor a 6 caracteres',
                 'matches'     => 'La contraseña no es igual'
-            ));
+            )
+        );
         if ($this->form_validation->run() == false) {
             $data['title'] = 'Cambiar Contraseña';
             $this->load->view('templates/auth_header', $data);
@@ -310,7 +378,4 @@ class Auth extends CI_Controller
             redirect('auth');
         }
     }
-
-    
-
 }

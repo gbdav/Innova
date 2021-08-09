@@ -67,7 +67,7 @@ function encriptar($a)
                                 <td><?php echo $fila->description ?></td>
                                 <td><?php echo $fila->date_ini ?></td>
                                 <td>
-                                    <a href="<?= base_url("admin/tareas/") ?><?= encriptar($fila->id) ?>"
+                                    <a href="<?= base_url("admin/tareas/") ?><?= encriptar ($fila->id) ?>"
                                     class="btn btn-facebook btn-circle" data-toggle="tooltip" data-placement="bottom" title="Tareas">
                                         <i class="fas fa-sticky-note"></i>
                                     </a>

@@ -71,13 +71,6 @@ function encriptar($a)
                                 <td><?php echo $fila->name ?></td>
                                 <td><?php echo $fila->name_project ?></td>
                                 <td>
-                                    <a href="<?= base_url("admin/tareas/") ?><?= encriptar($fila->id_tarea) ?>"
-                                    class="btn btn-facebook btn-circle" data-toggle="tooltip" data-placement="bottom" title="Tareas">
-                                        <i class="fas fa-sticky-note"></i>
-                                    </a>
-                                    <a href="<?= base_url("admin/updatepro/") ?><?= encriptar($fila->id_tarea) ?>" class="btn btn-warning btn-circle" data-toggle="tooltip" data-placement="bottom" title="Editar">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
                                     <a href="<?php echo base_url("admin/delproyecto/") ?><?= encriptar($fila->id_tarea) ?>" class="btn btn-danger btn-circle" data-toggle="tooltip" data-placement="bottom" title="Eliminar">
                                         <i class="fas fa-trash"></i>
                                     </a>

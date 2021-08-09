@@ -189,11 +189,11 @@ class Admin extends CI_Controller
     }
 
     function tareas($id){
-        /*$url = $id;
+        $url = $id;
         if (is_numeric($id)) {
             redirect(base_url('admin/usuarios'));
             die();
-        }*/
+        }
         $encrypt_method = 'AES-256-CBC';
         $secret_key = 'riju';
         $secret_iv = 'riju';
@@ -202,7 +202,7 @@ class Admin extends CI_Controller
         $id = openssl_decrypt(base64_decode($id), $encrypt_method, $key, 0, $iv);
         $this->load->model("p_model");
         $data['title'] = 'Tareas del proyecto';
-        $data['t']= $this->p_model->get_tarea();
+        $data['t']= $this->p_model->get_tarea($id);
         $data['user'] = $this->db->get_where('user', ['email' =>
         $this->session->userdata('email')])->row_array();
         $this->load->view('templates/header', $data);

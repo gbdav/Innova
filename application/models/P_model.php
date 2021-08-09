@@ -77,11 +77,12 @@ class P_model extends CI_Model
     }
 
     public function get_tarea(){
-        $sql = "SELECT nombre, description, stat_tarea, name, name_project from tareas, user, project 
+        $sql = "SELECT id_tarea, nombre, des_tareas, stat_tarea, name, name_project from tareas, user, project 
         WHERE tareas.id_user = user.id and tareas.id_pro = project.id";
 
         $consulta = $this->db->query($sql);
 
+        return $consulta->result();
 
     }
 }

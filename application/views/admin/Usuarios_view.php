@@ -30,8 +30,6 @@ function encriptar($a)
             </div>
             <br>
 
-            <br>
-
             <?= $this->session->flashdata('message'); ?>
 
         </div>
@@ -42,7 +40,7 @@ function encriptar($a)
                 <thead>
                     <tr>
                         <th scope="col">Nombre</th>
-                        <th scope="col">description</th>
+                        <th scope="col">email</th>
                         <th scope="col">Acciones</th>
                     </tr>
                 </thead>

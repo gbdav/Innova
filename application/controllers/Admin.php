@@ -203,6 +203,7 @@ class Admin extends CI_Controller
         $this->load->model("p_model");
         //$data["mod"] = $this->p_model->updatepro($id);
         $data['title'] = 'Tareas del proyecto';
+        $data['tareas']= $this->p_model->get_tarea();
         $data['user'] = $this->db->get_where('user', ['email' =>
         $this->session->userdata('email')])->row_array();
         $this->load->view('templates/header', $data);
@@ -210,6 +211,6 @@ class Admin extends CI_Controller
         $this->load->view('templates/topbar', $data);
         $this->load->view("admin/Tareasv", $data);
         $this->load->view('templates/footer');
-
     }
+
 }

@@ -75,4 +75,23 @@ class P_model extends CI_Model
             }
         }
     }
+    public function updateuser($id, $modificar = "NULL", $name = "NULL")
+    {
+        if ($modificar == "NULL") {
+            $consulta = $this->db->query("SELECT * FROM user WHERE id=$id");
+            return $consulta->result();
+        } else {
+            $consulta = $this->db->query("
+              UPDATE user SET
+              name     ='$name'
+               WHERE
+               id=$id;");
+
+            if ($consulta == true) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
 }

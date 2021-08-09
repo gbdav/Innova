@@ -42,8 +42,8 @@ function encriptar($a)
                 <thead>
                     <tr>
                         <th scope="col">Nombre</th>
-                        <th scope="col">description</th>
-                        <th scope="col">Fecha</th>
+                        <th scope="col">Correo</th>
+                        <th scope="col">Acciones</th>
                     </tr>
                 </thead>
                 <tbody id="info">
@@ -63,11 +63,10 @@ function encriptar($a)
                                 <td scope="row"><?php echo $fila->name ?></td>
                                 <td><?php echo $fila->email ?></td>
                                 <td>
-                                <td>
                                     <a href="" class="btn btn-facebook btn-circle" data-toggle="tooltip" data-placement="bottom" title="Mapa">
                                         <i class="fas fa-map"></i>
                                     </a>
-                                    <a href="" class="btn btn-warning btn-circle" data-toggle="tooltip" data-placement="bottom" title="Editar">
+                                    <a href="<?php echo base_url("admin/updateuser/") ?><?= encriptar($fila->id) ?>" class="btn btn-warning btn-circle" data-toggle="tooltip" data-placement="bottom" title="Editar">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <a href="<?php echo base_url("admin/delempleados/") ?><?= encriptar($fila->id) ?>" class="btn btn-danger btn-circle " data-toggle="tooltip" data-placement="bottom" title="Eliminar">

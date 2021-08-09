@@ -46,6 +46,7 @@ function encriptar($a)
                         <th scope="col">Nombre</th>
                         <th scope="col">description</th>
                         <th scope="col">Fecha</th>
+                        <th scope="col">Acciones</th>
                     </tr>
                 </thead>
                 <tbody id="info">
@@ -65,7 +66,6 @@ function encriptar($a)
                                 <td scope="row"><?php echo $fila->name_project ?></td>
                                 <td><?php echo $fila->description ?></td>
                                 <td><?php echo $fila->date_ini ?></td>
-                                <td>
                                 <td>
                                     <a href="" class="btn btn-facebook btn-circle" data-toggle="tooltip" data-placement="bottom" title="Tareas">
                                         <i class="fas fa-sticky-note"></i>

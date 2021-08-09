@@ -31,18 +31,111 @@ class Admin extends CI_Controller
     }
     public function usuarios()
     {
-        if ($this->session->userdata("email") != NULL) {
-            $data['title'] = 'Empleados de la empresa';
-            $data['user'] = $this->db->get_where('user', ['email' =>
-            $this->session->userdata('email')])->row_array();
-            /*echo 'Jorge' . $data['usuario']['nombre'];*/
-            $this->load->view('templates/header', $data);
-            $this->load->view('templates/sidebar', $data);
-            $this->load->view('templates/topbar', $data);
-            $this->load->view('admin/Usuarios_view', $data);
-            $this->load->view('templates/footer');
-        } else {
-            redirect('error_404');
+
+        $this->load->model("p_model");
+        $data['title'] = 'Empleados de la empresa';
+        $data['user'] = $this->db->get_where('user', ['email' =>
+        $this->session->userdata('email')])->row_array();
+
+        $data["p"] = $this->p_model->verempleados();
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('admin/Usuarios_view', $data);
+        $this->load->view('templates/footer');
+    }
+    //Borrar empleados;
+    public function delempleados($id)
+    {
+        $this->load->model("p_model");
+
+        if (is_numeric($id)) {
+            redirect(base_url('admin/usuarios'));
+            die();
         }
+        $string = $id;
+        $encrypt_method = 'AES-256-CBC';
+        $secret_key = 'riju';
+        $secret_iv = 'riju';
+        $key = hash('sha256', $secret_key);
+        $iv = substr(hash('sha256', $secret_iv), 0, 16);
+        $id = openssl_decrypt(base64_decode($string), $encrypt_method, $key, 0, $iv);
+
+        if (is_numeric($id)) {
+            $eliminar = $this->p_model->delempleados($id);
+            if ($eliminar == true) {
+                $this->session->set_flashdata('correcto', 'Empleado eliminado correctamente');
+            } else {
+                $this->session->set_flashdata('incorrecto', 'Empleado eliminado correctamente');
+            }
+            redirect(base_url('admin/usuarios'));
+        } else {
+            redirect(base_url('admin/usuarios'));
+        }
+    }
+    public function proyectos()
+    {
+        $this->load->model("p_model");
+        $data['title'] = 'Todos proyectos';
+        $data['user'] = $this->db->get_where('user', ['email' =>
+        $this->session->userdata('email')])->row_array();
+
+        $data["p"] = $this->p_model->verproyectos();
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('admin/proyectos', $data);
+        $this->load->view('templates/footer');
+    }
+
+    //Borrar proyecto;
+    public function delproyecto($id)
+    {
+        $this->load->model("p_model");
+
+        if (is_numeric($id)) {
+            redirect(base_url('admin/proyectos'));
+            die();
+        }
+        $string = $id;
+        $encrypt_method = 'AES-256-CBC';
+        $secret_key = 'riju';
+        $secret_iv = 'riju';
+        $key = hash('sha256', $secret_key);
+        $iv = substr(hash('sha256', $secret_iv), 0, 16);
+        $id = openssl_decrypt(base64_decode($string), $encrypt_method, $key, 0, $iv);
+
+        if (is_numeric($id)) {
+            $eliminar = $this->p_model->delproyecto($id);
+            if ($eliminar == true) {
+                $this->session->set_flashdata('correcto', 'Proyecto eliminado correctamente');
+            } else {
+                $this->session->set_flashdata('incorrecto', 'Proyecto eliminado correctamente');
+            }
+            redirect(base_url('admin/proyectos'));
+        } else {
+            redirect(base_url('admin/proyectos'));
+        }
+    }
+    function creproyecto()
+    {
+        $this->load->model("p_model");
+        if ($this->input->post("submit")) {
+            //llamo al metodo add
+            $añadir = $this->empadm_model->creproyecto(
+                $this->input->post("nombre"),
+                $this->input->post("description"),
+                $this->input->post("date_ini")
+            );
+        }
+        if ($añadir == true) {
+            //Sesion de una sola ejecución
+            $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><strong>¡Felicidades! </strong>  <br>Creado. </div>');
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><strong>¡Error! </strong>  <br>No se creo. </div>');
+        }
+
+        //redirecciono la pagina a la url por defecto
+        redirect(base_url('admin/proyectos/'));
     }
 }

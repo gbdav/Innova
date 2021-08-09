@@ -21,14 +21,26 @@ function encriptar($a)
 
 <body>
     <div class="container-fluid">
-        <h1 align="center" class="h1 text-gray-900 mb-4" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">Empleados</h1>
+        <h1 align="center" class="h1 text-gray-900 mb-4" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">Proyectos</h1>
 
         <div class="form-goup" align="center">
 
             <div class="form-inline">
-                <input class="form-control form-control-lg" id="searching" type="text" placeholder="Buscar empleado..." style="margin:0px auto; display:block;">
+                <input class="form-control form-control-lg" id="searching" type="text" placeholder="Buscar proyecto..." style="margin:0px auto; display:block;">
             </div>
             <br>
+
+
+            <div class="row" style="margin:0px auto; display:block;">
+
+                <a href="<?php echo base_url("admin/creproyecto/") ?>" class="btn btn-success btn-icon-split ">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-plus"></i>
+                    </span>
+                    <span class="text">Nuevo proyecto</span>
+                </a>
+
+            </div>
 
             <br>
 
@@ -51,7 +63,7 @@ function encriptar($a)
                     $i = 0;
                     if ($p == 0 || $p == null) {
                     ?>
-                        <h1>No hay empleados disponibles</h1>
+                        <h1>No hay proyectos disponibles</h1>
                         <?php
                     } else {
                         foreach ($p as $fila) {
@@ -60,17 +72,18 @@ function encriptar($a)
                         ?>
 
                             <tr>
-                                <td scope="row"><?php echo $fila->name ?></td>
-                                <td><?php echo $fila->email ?></td>
+                                <td scope="row"><?php echo $fila->nombre ?></td>
+                                <td><?php echo $fila->description ?></td>
+                                <td><?php echo $fila->date_ini ?></td>
                                 <td>
                                 <td>
-                                    <a href="" class="btn btn-facebook btn-circle" data-toggle="tooltip" data-placement="bottom" title="Mapa">
-                                        <i class="fas fa-map"></i>
+                                    <a href="" class="btn btn-facebook btn-circle" data-toggle="tooltip" data-placement="bottom" title="Más información">
+                                        <i class="fas fa-user"></i>
                                     </a>
                                     <a href="" class="btn btn-warning btn-circle" data-toggle="tooltip" data-placement="bottom" title="Editar">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <a href="<?php echo base_url("admin/delempleados/") ?><?= encriptar($fila->id) ?>" class="btn btn-danger btn-circle " data-toggle="tooltip" data-placement="bottom" title="Eliminar">
+                                    <a href="<?php echo base_url("admin/delproyecto/") ?><?= encriptar($fila->id) ?>" class="btn btn-danger btn-circle " data-toggle="tooltip" data-placement="bottom" title="Eliminar">
                                         <i class="fas fa-trash"></i>
                                     </a>&nbsp;
                                 </td>

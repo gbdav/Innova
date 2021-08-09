@@ -70,7 +70,7 @@ function encriptar($a)
                                     <a href="" class="btn btn-facebook btn-circle" data-toggle="tooltip" data-placement="bottom" title="Tareas">
                                         <i class="fas fa-sticky-note"></i>
                                     </a>
-                                    <a href="<?= base_url("admin/updatepro/") ?><?= $fila->id ?>" class="btn btn-warning btn-circle" data-toggle="tooltip" data-placement="bottom" title="Editar">
+                                    <a href="<?= base_url("admin/updatepro/") ?><?= encriptar($fila->id) ?>" class="btn btn-warning btn-circle" data-toggle="tooltip" data-placement="bottom" title="Editar">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <a href="<?php echo base_url("admin/delproyecto/") ?><?= encriptar($fila->id) ?>" class="btn btn-danger btn-circle" data-toggle="tooltip" data-placement="bottom" title="Eliminar">

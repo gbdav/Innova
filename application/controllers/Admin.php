@@ -187,4 +187,29 @@ class Admin extends CI_Controller
             redirect(base_url('admin/proyectos/'));
         }
     }
+
+    function tareas($id){
+        $url = $id;
+        if (is_numeric($id)) {
+            redirect(base_url('admin/usuarios'));
+            die();
+        }
+        $encrypt_method = 'AES-256-CBC';
+        $secret_key = 'riju';
+        $secret_iv = 'riju';
+        $key = hash('sha256', $secret_key);
+        $iv = substr(hash('sha256', $secret_iv), 0, 16);
+        $id = openssl_decrypt(base64_decode($id), $encrypt_method, $key, 0, $iv);
+        $this->load->model("p_model");
+        //$data["mod"] = $this->p_model->updatepro($id);
+        $data['title'] = 'Tareas del proyecto';
+        $data['user'] = $this->db->get_where('user', ['email' =>
+        $this->session->userdata('email')])->row_array();
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view("admin/Tareasv", $data);
+        $this->load->view('templates/footer');
+
+    }
 }

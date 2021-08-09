@@ -28,8 +28,8 @@ class P_model extends CI_Model
     ) {
         //$date_ini = date('Y-m-s');
         //$sql = "INSERT INTO project ('name', 'description', 'date_ini', 'stat_pro') VALUES('$nombre','$description','$date_ini',1)";
-        $consulta = $this->db->insert( "project", $data );
-         //$consulta = $this->db->query($sql);
+        $consulta = $this->db->insert("project", $data);
+        //$consulta = $this->db->query($sql);
         if ($consulta == true) {
             return true;
         } else {
@@ -51,6 +51,28 @@ class P_model extends CI_Model
             return true;
         } else {
             return false;
+        }
+    }
+    public function updatepro($id, $modificar = "NULL", $name_project = "NULL", $description = "NULL", $date_ini = "NULL", $stat_pro = "NULL")
+    {
+        if ($modificar == "NULL") {
+            $consulta = $this->db->query("SELECT * FROM project WHERE id=$id");
+            return $consulta->result();
+        } else {
+            $consulta = $this->db->query("
+              UPDATE project SET
+              name_project     ='$name_project', 
+              description     ='$description',
+              date_ini = '$date_ini',
+              stat_pro = '$stat_pro'           
+               WHERE
+               id=$id;");
+
+            if ($consulta == true) {
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 }

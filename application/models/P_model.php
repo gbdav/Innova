@@ -24,11 +24,12 @@ class P_model extends CI_Model
         }
     }
     public function creproyecto(
-        $nombre,
-        $description,
-        $date_ini
+        $data
     ) {
-        $consulta = $this->db->query("INSERT INTO project VALUES(NULL,'$nombre','$description','$date_ini',1);");
+        //$date_ini = date('Y-m-s');
+        //$sql = "INSERT INTO project ('name', 'description', 'date_ini', 'stat_pro') VALUES('$nombre','$description','$date_ini',1)";
+        $consulta = $this->db->insert( "project", $data );
+         //$consulta = $this->db->query($sql);
         if ($consulta == true) {
             return true;
         } else {

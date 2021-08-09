@@ -73,6 +73,7 @@ class Admin extends CI_Controller
             redirect(base_url('admin/usuarios'));
         }
     }
+
     public function proyectos()
     {
         $this->load->model("p_model");
@@ -119,15 +120,20 @@ class Admin extends CI_Controller
     }
     function creproyecto()
     {
+
         $this->load->model("p_model");
-        if ($this->input->post("submit")) {
-            //llamo al metodo add
-            $añadir = $this->empadm_model->creproyecto(
-                $this->input->post("nombre"),
-                $this->input->post("description"),
-                $this->input->post("date_ini")
-            );
-        }
+        $name=$this->input->post("nombre");
+        $desc=$this->input->post("description");
+        $date= date('Y-m-d');
+        $status= 1;
+        $data= [
+                'name_project' => $name,
+                'description' => $desc,
+                'date_ini' => $date,
+                'stat_pro' =>  $status
+            ];
+            $añadir = $this->p_model->creproyecto($data);
+        
         if ($añadir == true) {
             //Sesion de una sola ejecución
             $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><strong>¡Felicidades! </strong>  <br>Creado. </div>');

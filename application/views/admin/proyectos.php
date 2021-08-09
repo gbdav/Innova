@@ -31,9 +31,11 @@ function encriptar($a)
             <br>
 
 
-            <div class="row" style="margin:0px auto; display:block;">
-
-                <a href="<?php echo base_url("admin/creproyecto/") ?>" class="btn btn-success btn-icon-split ">
+            <div class="row" style="margin:0px auto; display:block;" 
+            data-toggle="modal" 
+            data-target="#modal-actualizar">
+               <!--href="<?php// echo base_url("admin/creproyecto/") ?>"-->
+                <a  class="btn btn-success btn-icon-split ">
                     <span class="icon text-white-50">
                         <i class="fas fa-plus"></i>
                     </span>
@@ -72,7 +74,7 @@ function encriptar($a)
                         ?>
 
                             <tr>
-                                <td scope="row"><?php echo $fila->nombre ?></td>
+                                <td scope="row"><?php echo $fila->name_project ?></td>
                                 <td><?php echo $fila->description ?></td>
                                 <td><?php echo $fila->date_ini ?></td>
                                 <td>
@@ -113,6 +115,36 @@ function encriptar($a)
             });
         });
     </script>
+
+<!-- Modal actualizar -->
+<div class=" modal fade" id="modal-actualizar">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header" style="background-color: #BCF7BC !important;">
+                  <h4 class="modal-title"><SPAN id="modal-accion"></SPAN>Proyecto</h4>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                  <DIV class="row">
+                  <form class="pro" method="post" action="<?= base_url('admin/creproyecto/'); ?>">
+                      <div class="form-group">
+                            <input type="text" id="nombre" name="nombre" class="form-control form-control-pro" placeholder="Escribe un nombre">
+                             
+                       </div>
+                       <div class="form-group">
+                            <input type="text" id="description" name="description" class="form-control form-control-pro" placeholder="Escribe una descripcion">
+                                        
+                            </div>
+                        <button type="submit" class="btn btn-success btn-user btn-block">
+                            Iniciar sesión
+                        </button>    
+                  </div>
+                </div>
+              </div>
+            </div>
+      </div>
 
 
 </body>

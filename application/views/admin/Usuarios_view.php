@@ -40,11 +40,7 @@ function encriptar($a)
                 <thead>
                     <tr>
                         <th scope="col">Nombre</th>
-<<<<<<< HEAD
-                        <th scope="col">email</th>
-=======
                         <th scope="col">Correo</th>
->>>>>>> 262f6868fcf1f1b10676b8704d3e49493a292125
                         <th scope="col">Acciones</th>
                     </tr>
                 </thead>

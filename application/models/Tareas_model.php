@@ -18,14 +18,7 @@
         return $rs->result();
     }
     
-    public function delete_tarea($id){
-        $this->db->where('id', $id);
-        $this->db->delete('project', ['id' => $id]);
-        $obj[ "resultado" ] = true;
-        $obj[ "mensaje" ]    = $obj[ "resultado" ] ?
-            "Servicio eliminado exitosamente" : "Imposible borrar";
-         return $obj;
-    }
+   
 
 
     

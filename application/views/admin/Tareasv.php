@@ -71,7 +71,7 @@ function encriptar($a)
                                 <td><?php echo $fila->name ?></td>
                                 <td><?php echo $fila->name_project ?></td>
                                 <td>
-                                    <a href="<?php echo base_url("admin/delproyecto/") ?><?= encriptar($fila->id_tarea) ?>" class="btn btn-danger btn-circle" data-toggle="tooltip" data-placement="bottom" title="Eliminar">
+                                    <a href="<?php echo base_url("admin/deltarea/") ?><?= encriptar($fila->id_tarea) ?>" class="btn btn-danger btn-circle" data-toggle="tooltip" data-placement="bottom" title="Eliminar">
                                         <i class="fas fa-trash"></i>
                                     </a>
                                 </td>
@@ -109,7 +109,7 @@ function encriptar($a)
                         <h4 class="modal-title">Crear Proyecto</h4>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
-                    <form class="pro" method="post" action="<?= base_url('admin/creproyecto/'); ?>">
+                    <form class="pro" method="post" action="<?= base_url('admin/create_tarea/'); ?>">
                         <div class="form-group">
                             <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Escribe un nombre" required>
 

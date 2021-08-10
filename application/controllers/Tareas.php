@@ -45,13 +45,7 @@ class Tareas extends CI_Controller
         $this->db->insert('project',$data);
     }
 
-    public function borra_tarea(){
-        $id= $this->input->post("id");
-        $obj = $this->Proyectos_model->delete_tarea( $id);
-		$this->output->set_content_type( "application/json" );
-		echo json_encode( $obj );
-       
-    }
+    
 
     
 }

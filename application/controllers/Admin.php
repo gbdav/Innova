@@ -211,5 +211,34 @@ class Admin extends CI_Controller
         $this->load->view("admin/Tareasv", $data);
         $this->load->view('templates/footer');
     }
+     //Borrar tarea;
+     public function deltarea($id)
+     {
+         $this->load->model("p_model");
+ 
+         if (is_numeric($id)) {
+             redirect(base_url('admin/tareas'));
+             die();
+         }
+         $string = $id;
+         $encrypt_method = 'AES-256-CBC';
+         $secret_key = 'riju';
+         $secret_iv = 'riju';
+         $key = hash('sha256', $secret_key);
+         $iv = substr(hash('sha256', $secret_iv), 0, 16);
+         $id = openssl_decrypt(base64_decode($string), $encrypt_method, $key, 0, $iv);
+ 
+         if (is_numeric($id)) {
+             $eliminar = $this->p_model->deltarea($id);
+             if ($eliminar == true) {
+                 $this->session->set_flashdata('correcto', 'Tarea eliminada correctamente');
+             } else {
+                 $this->session->set_flashdata('incorrecto', 'Tarea eliminada correctamente');
+             }
+             redirect(base_url('admin/proyectos'));
+         } else {
+             redirect(base_url('admin/proyectos'));
+         }
+     }
 
 }

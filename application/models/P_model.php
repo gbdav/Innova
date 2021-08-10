@@ -95,6 +95,16 @@ class P_model extends CI_Model
             return false;
         }
     }
+
+    public function realizatarea($id)
+    {
+        $consulta = $this->db->query("UPDATE tareas SET stat_tarea=1 WHERE id_tarea='$id'");
+        if ($consulta == true) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     
     
 }

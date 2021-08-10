@@ -8,15 +8,17 @@
                 <div class="row">
                     <div class="col col-sm-12">
                     <?php
-                        $em= $user['email'];
-                        $querytabla= "SELECT *FROM project WHERE email = '$em' ";
+                        $id= $user['id'];
+                        $querytabla= "SELECT id_tarea,id_user,date_ini,name_project,nombre,project.description, id_pro,name_project, user.id,project.id,des_tareas from tareas, project, user where tareas.id_user = user.id and tareas.id_pro = project.id and user.id = '$id'";;
                         $tabla = $this->db->query($querytabla)->result_array();
                     ?>
                         <table class="table table-hove" id="tabla-proyectos">
                             <TR class="bg-Active">
-                            <th class="text-center">Nombre</th>
-                            <th class="text-center">DESCRIPCION</th>
-                            <th class="text-center">FECHA INICIO</th>
+                            <th class="text-center">Proyecto</th>
+                            <th class="text-center">Des Proyecto</th>
+                            <th class="text-center">Fecha Inicio</th>
+                            <th class="text-center">Tareas</th>
+                            <th class="text-center">Desc Tareas</th>
                             <th class="text-center">ACCION</th>
                         </tr>
                         <?php foreach ($tabla as $p) : ?>
@@ -24,17 +26,15 @@
                             <td class="text-center"><?= $p['name_project']; ?></a></td>
                             <td><?= $p['description']; ?></td>
                             <td class="text-center"><?= $p['date_ini']; ?></td>
+                            <td class="text-center"><?= $p['nombre']; ?></td>
+                            <td class="text-center"><?= $p['des_tareas']; ?></td>
                             <td class="text-center">
-                                <BUTTON 
-                                    id="actualizar"
-                                    class="btn btn-sm btn-info btn-edit"
-                                    data-id="<?= $p['id']; ?>"
-                                    data-name_project="<?= $p['name_project']; ?>"
-                                    data-email="<?= $p['email']; ?>"
-                                    data-toggle="modal" 
-                                    data-target="#modal-actualizar"
-                                    onclick="click_actualizar('<?= $p['id']; ?>','<?= $p['name_project']; ?>', '<?= $p['description']; ?>','<?= $p['date_ini']; ?>', '<?= $p['email']; ?>' )">
-                                    <I class="fas fa-edit"></I>
+                                <BUTTON type="button"
+                                    id="btn-actualizar-confirma"
+                                    class="btn btn-sm btn-success btn-edit"
+                                    data-id="<?= $p['id_tarea']; ?>"
+                                    onclick="realizatarea('<?= $p['id_tarea']; ?>' )">
+                                    <I class="fas fa-check"></I>
                                 </BUTTON>
                             </td>
                         </tr>    

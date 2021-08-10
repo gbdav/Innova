@@ -41,10 +41,10 @@ class User extends CI_Controller
 
     public function proyectos()
     {
-        if ($this->session->userdata("email") != NULL) {
+        if ($this->session->userdata("id") != NULL) {
             $data['title'] = 'Mis Proyectos ';
-            $data['user'] = $this->db->get_where('user', ['email' =>
-            $this->session->userdata('email')])->row_array();
+            $data['user'] = $this->db->get_where('user', ['id' =>
+            $this->session->userdata('id')])->row_array();
             /*echo 'Jorge' . $data['usuario']['nombre'];*/
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);

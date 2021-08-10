@@ -43,10 +43,10 @@ function encriptar($a)
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">description</th>
-                        <th scope="col">Fecha</th>
-                        <th scope="col" text="center">Acciones</th>
+                        <th scope="col" align="center">Nombre</th>
+                        <th scope="col" align="center">description</th>
+                        <th scope="col" align="center">Fecha</th>
+                        <th scope="col" align="center">Acciones</th>
                     </tr>
                 </thead>
                 <tbody id="info">
@@ -63,12 +63,11 @@ function encriptar($a)
                         ?>
 
                             <tr>
-                                <td scope="row"><?php echo $fila->name_project ?></td>
-                                <td><?php echo $fila->description ?></td>
-                                <td><?php echo $fila->date_ini ?></td>
-                                <td>
-                                    <a href="<?= base_url("admin/tareas/") ?><?= encriptar ($fila->id) ?>"
-                                    class="btn btn-facebook btn-circle" data-toggle="tooltip" data-placement="bottom" title="Tareas">
+                                <td align="center"><?php echo $fila->name_project ?></td>
+                                <td align="center"><?php echo $fila->description ?></td>
+                                <td align="center"><?php echo $fila->date_ini ?></td>
+                                <td align="center">
+                                    <a href="<?= base_url("admin/tareas/") ?><?= encriptar($fila->id) ?>" class="btn btn-facebook btn-circle" data-toggle="tooltip" data-placement="bottom" title="Tareas">
                                         <i class="fas fa-sticky-note"></i>
                                     </a>
                                     <a href="<?= base_url("admin/updatepro/") ?><?= encriptar($fila->id) ?>" class="btn btn-warning btn-circle" data-toggle="tooltip" data-placement="bottom" title="Editar">

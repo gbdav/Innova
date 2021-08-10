@@ -32,29 +32,21 @@ function encriptar($a)
                         <div class="form-row">
                               <div class="col">
 
-                                    <label> <i class="fas fa-hotel">&nbsp;&nbsp;&nbsp;</i>name_project</label>
+                                    <label> <i class="fas fa-hotel">&nbsp;&nbsp;&nbsp;</i>Nombre del proyecto</label>
                                     <input type="text" name="name_project" class="form-control" value="<?php echo $fila->name_project; ?>" placeholder="" required>
                               </div>
 
                               <div class="col">
 
-                                    <label><i class="fas fa-globe-americas">&nbsp;&nbsp;&nbsp;</i>description</label>
+                                    <label><i class="fas fa-globe-americas">&nbsp;&nbsp;&nbsp;</i>Descripcion</label>
                                     <input type="text" name="description" class="form-control" value="<?php echo $fila->description; ?>" placeholder="" required>
 
 
                               </div>
                               <div class="col">
 
-                                    <label> <i class="fas fa-hotel">&nbsp;&nbsp;&nbsp;</i>date_ini</label>
-                                    <input type="text" name="date_ini" class="form-control" value="<?php echo $fila->date_ini; ?>" placeholder="" required>
-                              </div>
-
-                              <div class="col">
-
-                                    <label><i class="fas fa-globe-americas">&nbsp;&nbsp;&nbsp;</i>stat_pro</label>
-                                    <input type="text" name="stat_pro" class="form-control" value="<?php echo $fila->stat_pro; ?>" placeholder="" required>
-
-
+                                    <label> <i class="fas fa-hotel">&nbsp;&nbsp;&nbsp;</i>Fecha de creacion</label>
+                                    <input type="text" name="date_ini" class="form-control" value="<?php echo $fila->date_ini; ?>" placeholder="" readonly>
                               </div>
 
                         <?php } ?>
@@ -71,6 +63,22 @@ function encriptar($a)
                                           </span>
                                           <span class="text">Modificar</span>
                                     </button>
+                                    <?php foreach ($mod as $row) { ?>
+                                          <a href="<?= base_url('admin/proyectos/') ?>" class="btn btn-facebook btn-icon-split ">
+                                                <span class="icon text-white-50">
+                                                      <i class="fas fa-undo-alt"></i>
+                                                </span>
+                                                <span class="text">Regresar</span>
+                                          </a>
+                                    <?php } ?>
+                                    <?php foreach ($mod as $row) { ?>
+                                          <a href="<?php echo base_url("admin/delproyecto/") ?><?= encriptar($fila->id) ?>" class="btn btn-danger btn-icon-split ">
+                                                <span class="icon text-white-50">
+                                                      <i class="fas fa-trash"></i>
+                                                </span>
+                                                <span class="text">Eliminar</span>
+                                          </a>
+                                    <?php } ?>
                               </div>
                         </center>
                         <br>

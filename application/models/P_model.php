@@ -53,7 +53,7 @@ class P_model extends CI_Model
             return false;
         }
     }
-    public function updatepro($id, $modificar = "NULL", $name_project = "NULL", $description = "NULL", $date_ini = "NULL", $stat_pro = "NULL")
+    public function updatepro($id, $modificar = "NULL", $name_project = "NULL", $description = "NULL")
     {
         if ($modificar == "NULL") {
             $consulta = $this->db->query("SELECT * FROM project WHERE id=$id");
@@ -62,9 +62,7 @@ class P_model extends CI_Model
             $consulta = $this->db->query("
               UPDATE project SET
               name_project     ='$name_project', 
-              description     ='$description',
-              date_ini = '$date_ini',
-              stat_pro = '$stat_pro'           
+              description     ='$description'          
                WHERE
                id=$id;");
 
@@ -76,19 +74,39 @@ class P_model extends CI_Model
         }
     }
 
-    public function get_tarea($id){
+    public function updateuser($id, $modificar = "NULL", $name = "NULL")
+    {
+        if ($modificar == "NULL") {
+            $consulta = $this->db->query("SELECT * FROM user WHERE id=$id");
+            return $consulta->result();
+        } else {
+            $consulta = $this->db->query("
+              UPDATE user SET
+              name    ='$name'          
+               WHERE
+               id=$id;");
+
+            if ($consulta == true) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    public function get_tarea($id)
+    {
         $sql = "SELECT id_tarea, nombre, des_tareas, stat_tarea, name, name_project from tareas, user, project 
         WHERE tareas.id_user = user.id and tareas.id_pro = project.id and project.id = $id and stat_tarea =1";
 
         $consulta = $this->db->query($sql);
 
         return $consulta->result();
-
     }
 
     public function deltarea($id)
     {
-        $consulta = $this->db->query("UPDATE tareas SET stat_tarea=2 WHERE id_tarea='$id'");
+        $consulta = $this->db->query("UPDATE tareas SET stat_tarea=0 WHERE id_tarea='$id'");
         if ($consulta == true) {
             return true;
         } else {
@@ -105,6 +123,4 @@ class P_model extends CI_Model
             return false;
         }
     }
-    
-    
 }

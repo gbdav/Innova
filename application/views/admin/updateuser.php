@@ -21,7 +21,7 @@ function encriptar($a)
 
     <div class="container-fluid">
 
-        <h1 align="center" class="h1 text-gray-900 mb-4" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">Modificar usuario</h1>
+        <h1 align="center" class="h1 text-gray-900 mb-4" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">Modificar empleado</h1>
         <br>
 
 
@@ -32,8 +32,13 @@ function encriptar($a)
                 <div class="form-row">
                     <div class="col">
 
-                        <label> <i class="fas fa-hotel">&nbsp;&nbsp;&nbsp;</i>name</label>
+                        <label> <i class="fas fa-hotel">&nbsp;&nbsp;&nbsp;</i>Nombre</label>
                         <input type="text" name="name" class="form-control" value="<?php echo $fila->name; ?>" placeholder="" required>
+                    </div>
+                    <div class="col">
+
+                        <label> <i class="fas fa-hotel">&nbsp;&nbsp;&nbsp;</i>Correo electronico</label>
+                        <input type="text" name="email" class="form-control" value="<?php echo $fila->email; ?>" placeholder="" readonly>
                     </div>
 
 
@@ -52,6 +57,22 @@ function encriptar($a)
                             </span>
                             <span class="text">Modificar</span>
                         </button>
+                        <?php foreach ($mod as $row) { ?>
+                            <a href="<?= base_url('admin/usuarios/') ?>" class="btn btn-facebook btn-icon-split ">
+                                <span class="icon text-white-50">
+                                    <i class="fas fa-undo-alt"></i>
+                                </span>
+                                <span class="text">Regresar</span>
+                            </a>
+                        <?php } ?>
+                        <?php foreach ($mod as $row) { ?>
+                            <a href="<?php echo base_url("admin/delempleados/") ?><?= encriptar($fila->id) ?>" class="btn btn-danger btn-icon-split ">
+                                <span class="icon text-white-50">
+                                    <i class="fas fa-trash"></i>
+                                </span>
+                                <span class="text">Eliminar</span>
+                            </a>
+                        <?php } ?>
                     </div>
                 </center>
                 <br>

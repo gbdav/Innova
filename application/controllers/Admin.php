@@ -150,7 +150,7 @@ class Admin extends CI_Controller
     {
         $url = $id;
         if (is_numeric($id)) {
-            redirect(base_url('admin/usuarios'));
+            redirect(base_url('admin/proyectos'));
             die();
         }
         $encrypt_method = 'AES-256-CBC';
@@ -174,9 +174,7 @@ class Admin extends CI_Controller
                 $id,
                 $this->input->post("submit"),
                 $this->input->post("name_project"),
-                $this->input->post("description"),
-                $this->input->post("date_ini"),
-                $this->input->post("stat_pro")
+                $this->input->post("description")
             );
             if ($mod == true) {
                 //Sesion de una sola ejecución
@@ -188,10 +186,50 @@ class Admin extends CI_Controller
         }
     }
 
-    function tareas($id){
+    function updateuser($id)
+    {
         $url = $id;
         if (is_numeric($id)) {
-            redirect(base_url('admin/usuarios'));
+            redirect(base_url('admin/proyectos'));
+            die();
+        }
+        $encrypt_method = 'AES-256-CBC';
+        $secret_key = 'riju';
+        $secret_iv = 'riju';
+        $key = hash('sha256', $secret_key);
+        $iv = substr(hash('sha256', $secret_iv), 0, 16);
+        $id = openssl_decrypt(base64_decode($id), $encrypt_method, $key, 0, $iv);
+        $this->load->model("p_model");
+        $data["mod"] = $this->p_model->updateuser($id);
+        $data['title'] = 'Modificar proyecto';
+        $data['user'] = $this->db->get_where('user', ['email' =>
+        $this->session->userdata('email')])->row_array();
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view("admin/updateuser", $data);
+        $this->load->view('templates/footer');
+        if ($this->input->post("submit")) {
+            $mod = $this->p_model->updateuser(
+                $id,
+                $this->input->post("submit"),
+                $this->input->post("name"),
+            );
+            if ($mod == true) {
+                //Sesion de una sola ejecución
+                $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><strong>¡Felicidades! </strong>  <br>Empleado modificado. </div>');
+            } else {
+                $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><strong>¡Error! </strong>  <br>El empleado no fue modificado . </div>');
+            }
+            redirect(base_url('admin/usuarios/'));
+        }
+    }
+
+    function tareas($id)
+    {
+        $url = $id;
+        if (is_numeric($id)) {
+            redirect(base_url('admin/proyectos'));
             die();
         }
         $encrypt_method = 'AES-256-CBC';
@@ -202,7 +240,7 @@ class Admin extends CI_Controller
         $id = openssl_decrypt(base64_decode($id), $encrypt_method, $key, 0, $iv);
         $this->load->model("p_model");
         $data['title'] = 'Tareas del proyecto';
-        $data['t']= $this->p_model->get_tarea($id);
+        $data['t'] = $this->p_model->get_tarea($id);
         $data['user'] = $this->db->get_where('user', ['email' =>
         $this->session->userdata('email')])->row_array();
         $this->load->view('templates/header', $data);
@@ -211,34 +249,33 @@ class Admin extends CI_Controller
         $this->load->view("admin/Tareasv", $data);
         $this->load->view('templates/footer');
     }
-     //Borrar tarea;
-     public function deltarea($id)
-     {
-         $this->load->model("p_model");
- 
-         if (is_numeric($id)) {
-             redirect(base_url('admin/tareas'));
-             die();
-         }
-         $string = $id;
-         $encrypt_method = 'AES-256-CBC';
-         $secret_key = 'riju';
-         $secret_iv = 'riju';
-         $key = hash('sha256', $secret_key);
-         $iv = substr(hash('sha256', $secret_iv), 0, 16);
-         $id = openssl_decrypt(base64_decode($string), $encrypt_method, $key, 0, $iv);
- 
-         if (is_numeric($id)) {
-             $eliminar = $this->p_model->deltarea($id);
-             if ($eliminar == true) {
-                 $this->session->set_flashdata('correcto', 'Tarea eliminada correctamente');
-             } else {
-                 $this->session->set_flashdata('incorrecto', 'Tarea eliminada correctamente');
-             }
-             redirect(base_url('admin/proyectos'));
-         } else {
-             redirect(base_url('admin/proyectos'));
-         }
-     }
+    //Borrar tarea;
+    public function deltarea($id)
+    {
+        $this->load->model("p_model");
 
+        if (is_numeric($id)) {
+            redirect(base_url('admin/proyectos'));
+            die();
+        }
+        $string = $id;
+        $encrypt_method = 'AES-256-CBC';
+        $secret_key = 'riju';
+        $secret_iv = 'riju';
+        $key = hash('sha256', $secret_key);
+        $iv = substr(hash('sha256', $secret_iv), 0, 16);
+        $id = openssl_decrypt(base64_decode($string), $encrypt_method, $key, 0, $iv);
+
+        if (is_numeric($id)) {
+            $eliminar = $this->p_model->deltarea($id);
+            if ($eliminar == true) {
+                $this->session->set_flashdata('correcto', 'Tarea eliminada correctamente');
+            } else {
+                $this->session->set_flashdata('incorrecto', 'Tarea eliminada correctamente');
+            }
+            redirect(base_url('admin/proyectos'));
+        } else {
+            redirect(base_url('admin/proyectos'));
+        }
+    }
 }

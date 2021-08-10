@@ -213,7 +213,7 @@ class Admin extends CI_Controller
             $mod = $this->p_model->updateuser(
                 $id,
                 $this->input->post("submit"),
-                $this->input->post("name"),
+                $this->input->post("name")
             );
             if ($mod == true) {
                 //Sesion de una sola ejecución
@@ -241,6 +241,7 @@ class Admin extends CI_Controller
         $this->load->model("p_model");
         $data['title'] = 'Tareas del proyecto';
         $data['t'] = $this->p_model->get_tarea($id);
+        $data['id']= $id;
         $data['user'] = $this->db->get_where('user', ['email' =>
         $this->session->userdata('email')])->row_array();
         $this->load->view('templates/header', $data);
@@ -278,6 +279,39 @@ class Admin extends CI_Controller
             redirect(base_url('admin/proyectos'));
         }
     }
+
+    function cretareas()
+    {
+
+        $this->load->model("p_model");
+        $nombre = $this->input->post("nombre");
+        $des_tareas = $this->input->post("des_tareas");
+        $stat_tarea = 0;
+        $id_user = $this->input->post("id_user");
+        $id_pro= $this->input->post("pro");
+        
+        
+        $data = [
+            'nombre' => $nombre,
+            'des_tareas' => $des_tareas,
+            'stat_tarea' => $stat_tarea,
+            'id_user' => $id_user,
+            'id_pro' => $id_pro
+
+        ];
+        $añadir = $this->p_model->cretarea($data);
+
+        if ($añadir == true) {
+            //Sesion de una sola ejecución
+            $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><strong>¡Felicidades! </strong>  <br>Creado. </div>');
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><strong>¡Error! </strong>  <br>No se creo. </div>');
+        }
+
+        //redirecciono la pagina a la url por defecto
+        redirect(base_url('admin/proyectos/'));
+    }
+    
 
     function mapa()
     {

@@ -241,4 +241,20 @@ class Admin extends CI_Controller
          }
      }
 
+    function mapa(){
+        if ($this->session->userdata("email") != NULL) {
+            $data['title'] = 'Mapa';
+            $data['user'] = $this->db->get_where('user', ['email' =>
+            $this->session->userdata('email')])->row_array();
+            // /echo 'Jorge' . $data['usuario']['nombre'];/
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar', $data);
+            $this->load->view('admin/mapa', $data);
+            $this->load->view('templates/footer');
+        } else {
+            redirect('error_404');
+        }
+    }
+
 }

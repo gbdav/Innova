@@ -357,4 +357,33 @@ class Admin extends CI_Controller
             redirect('error_404');
         }
     }
+
+    function updateUbicacion()
+    {
+        /* $url = $id;
+        if (is_numeric($id)) {
+            redirect(base_url('admin/proyectos'));
+            die();
+        }
+        $encrypt_method = 'AES-256-CBC';
+        $secret_key = 'riju';
+        $secret_iv = 'riju';
+        $key = hash('sha256', $secret_key);
+        $iv = substr(hash('sha256', $secret_iv), 0, 16);
+        $id = openssl_decrypt(base64_decode($id), $encrypt_method, $key, 0, $iv); */
+        $id = $_POST['id'];
+        $latitud = $_POST['latitud'];
+        $longitud = $_POST['longitud'];
+        $mod = $this->load->model("mapa_model");
+        $mod = $this->mapa_model->update(
+            $id,
+            $latitud,
+            $longitud,
+        );
+        if ($mod) {
+            echo 'Ubicación guardada';
+        } else {
+            echo 'Error al guardar la ubicación';
+        }
+    }
 }

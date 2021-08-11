@@ -22,7 +22,7 @@
       <div class="col col-sm-12">
         <?php
         $id = $user['id'];
-        $querytabla = "SELECT id_tarea,id_user,date_ini,name_project,nombre,stat_tarea,project.description, id_pro,name_project, user.id,project.id,des_tareas from tareas, project, user where tareas.id_user = user.id and tareas.id_pro = project.id and user.id = '$id' and stat_tarea != 2";;
+        $querytabla = "SELECT id_tarea,id_user,date_ini,name_project,nombre,stat_tarea,project.description, id_pro,name_project, user.id,project.id,des_tareas from tareas, project, user where tareas.id_user = user.id and tareas.id_pro = project.id and user.id = '$id' and stat_tarea != 2 and stat_pro = 1 ";
         $tabla = $this->db->query($querytabla)->result_array();
         ?>
         <table class="table table-hove" id="tabla-proyectos">

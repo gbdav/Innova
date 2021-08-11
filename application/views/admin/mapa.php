@@ -31,6 +31,8 @@
     <script>
         var map;
         var marker;
+        var infoWindow;
+        var id = '<?= $user['id'] ?>'
         var usuarioLat = parseFloat("<?= $user['latitud'] ?>")
         var usuarioLng = parseFloat("<?= $user['longitud'] ?>")
         var center = {
@@ -61,10 +63,22 @@
                     map: map,
                 });
             }
-            map.addListener("click", onMapClick)
+            infowindow = new google.maps.InfoWindow({
+                content: "<p>Latitud: " + marker.getPosition().lat() + "\nLongitud: " + marker.getPosition().lng() + "</p>",
+            });
+            map.addListener("click", onMapClick);
+            marker.addListener("click", () => {
+                infowindow.open(map, marker);
+            })
         }
 
+
+
         function onMapClick(event) {
+            if (infoWindow) {
+                infoWindow.close();
+                infoWindow = null;
+            }
             document.getElementById('btnGuardar').disabled = false
             document.getElementById('btnCancelar').disabled = false
             var lat = event.latLng.lat()
@@ -95,7 +109,23 @@
         }
 
         function Guardar() {
-            alert('Guardando...')
+            $.ajax({
+                type: 'POST',
+                url: '<?php echo base_url(); ?>admin/updateUbicacion',
+                data: {
+                    id: id,
+                    latitud: marker.getPosition().lat(),
+                    longitud: marker.getPosition().lng()
+                },
+                success: function(msg) {
+                    alert(msg)
+                    document.getElementById('btnGuardar').disabled = true
+                    document.getElementById('btnCancelar').disabled = true
+                },
+                error: function(msj) {
+                    alert("Ha ocurrido un error")
+                }
+            });
         }
     </script>
 

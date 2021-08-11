@@ -29,8 +29,12 @@ function encriptar($a)
                 <input class="form-control form-control-lg" id="searching" type="text" placeholder="Buscar proyecto..." style="margin:0px auto; display:block;">
             </div>
             <br>
-
-            <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#myModal">Nueva tarea</button>
+             <!-- data-toggle="modal" data-target="#myModal"-->
+            <button type="button" class="btn btn-success btn-lg"
+             
+             >
+                <a href="<?php echo base_url("admin/addtareas/") ?><?= encriptar($id) ?>"> Nueva tarea</a>
+            </button>
             <br> <br>
             <br>
 

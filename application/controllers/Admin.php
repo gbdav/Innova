@@ -280,16 +280,46 @@ class Admin extends CI_Controller
         }
     }
 
-    function cretareas()
-    {
+    function addtareas($id){
+        $url = $id;
+        if (is_numeric($id)) {
+            redirect(base_url('admin/proyectos'));
+            die();
+        }
+        $encrypt_method = 'AES-256-CBC';
+        $secret_key = 'riju';
+        $secret_iv = 'riju';
+        $key = hash('sha256', $secret_key);
+        $iv = substr(hash('sha256', $secret_iv), 0, 16);
+        $id = openssl_decrypt(base64_decode($id), $encrypt_method, $key, 0, $iv);
+        $this->load->model("p_model");
+        $data['title'] = 'Crear tarea';
+        $data['t'] = $this->p_model->get_tarea($id);
+        $data['id']= $id;
+        $data['user'] = $this->db->get_where('user', ['email' =>
+        $this->session->userdata('email')])->row_array();
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view("admin/cretareas", $data);
+        $this->load->view('templates/footer');
 
+    }
+
+    function cretareas($id)
+    {
+        $url = $id;
+        if (is_numeric($id)) {
+            redirect(base_url('admin/proyectos'));
+            die();
+        }
         $this->load->model("p_model");
         $nombre = $this->input->post("nombre");
         $des_tareas = $this->input->post("des_tareas");
         $stat_tarea = 0;
         $id_user = $this->input->post("id_user");
         $id_pro= $this->input->post("pro");
-        
+
         
         $data = [
             'nombre' => $nombre,
@@ -308,8 +338,11 @@ class Admin extends CI_Controller
             $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><strong>¡Error! </strong>  <br>No se creo. </div>');
         }
 
+        //$url = base_url() . "admin/tareas/" . $id;
+
         //redirecciono la pagina a la url por defecto
-        redirect(base_url('admin/proyectos/'));
+        //redirect($url);
+       redirect(base_url('admin/tareas/'));
     }
     
 

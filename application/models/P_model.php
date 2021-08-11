@@ -115,7 +115,7 @@ class P_model extends CI_Model
 
     public function deltarea($id)
     {
-        $consulta = $this->db->query("UPDATE tareas SET stat_tarea=0 WHERE id_tarea='$id'");
+        $consulta = $this->db->query("UPDATE tareas SET stat_tarea=2 WHERE id_tarea='$id'");
         if ($consulta == true) {
             return true;
         } else {

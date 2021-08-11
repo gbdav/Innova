@@ -306,7 +306,7 @@ class Admin extends CI_Controller
 
     }
 
-    function cretareas($id)
+    function cretareas()
     {
         $url = $id;
         if (is_numeric($id)) {
@@ -342,7 +342,7 @@ class Admin extends CI_Controller
 
         //redirecciono la pagina a la url por defecto
         //redirect($url);
-       redirect(base_url('admin/tareas/'));
+       redirect(base_url('admin/proyectos/'));
     }
     
 

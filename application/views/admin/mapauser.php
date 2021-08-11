@@ -76,7 +76,6 @@ function encriptar($a)
                         var map;
                         var marker;
                         var infoWindow;
-                        
                         var usuarioLat = parseFloat("<?= $m['latitud'] ?>")
                         var usuarioLng = parseFloat("<?= $m['longitud'] ?>")
                         var center = {

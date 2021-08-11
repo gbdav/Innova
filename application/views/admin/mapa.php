@@ -20,8 +20,11 @@
 </head>
 
 <body>
-    <?= $user['latitud']; ?>
-    <?= $user['longitud']; ?>
+    <!-- <?= $user['latitud']; ?>
+    <?= $user['longitud']; ?>-->
+
+    <h1 align="center" class="h1 text-gray-900 mb-4" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">Mi ubicacion</h1>
+
     <div id="map"></div>
     <div class="text-center">
         <button id='btnGuardar' disabled type="button" class="btn btn-primary" onclick="Guardar()">Guardar</button>

@@ -101,24 +101,43 @@ function encriptar($a)
             });
         });
     </script>
-    <div class="container">
+
+     <!--Modal crear tareas --> 
+   <div class="container">
         <div class="modal fade" id="myModal" role="dialog">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
-                    <div class="modal-header" align="center">
-                        <h4 class="modal-title">Crear Proyecto</h4>
+                    <div class="modal-header">
+                        <h4 class="modal-title">Crear tarea</h4>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
-                    <form class="pro" method="post" action="<?= base_url('admin/create_tarea/'); ?>">
+                    <form class="pro" method="post" action="<?= base_url('admin/cretareas/'); ?>">
                         <div class="form-group">
                             <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Escribe un nombre" required>
-
                         </div>
                         <div class="form-group">
-                            <input type="text" id="description" name="description" class="form-control form-control-pro" placeholder="Escribe una descripcion" required>
+                            <input type="text" id="des_tareas" name="des_tareas" class="form-control form-control-tar" placeholder="Escribe una descripcion" required>
                         </div>
+                        <div class="form-group">
+                        <LABEL><STRONG>Proyecto:</STRONG></LABEL>
+                            <input type="text" id="pro" name="pro" class="form-control form-control-tar"
+                            value="<?php echo $id ?>">
+                            
+                        </div>
+                        <?php
+                        $querytabla = "SELECT * FROM user WHERE role_id=2";
+                        $empleado = $this->db->query($querytabla)->result_array();
+                        ?>
+                        <DIV class="form-group form-control form-control-tar col col-md-4" action="<?= base_url('admin/get_empleados'); ?>" >
+                            <LABEL><STRONG>Usuario:</STRONG></LABEL>
+                            <SELECT class="form-control" id="id_user" name="id_user">
+                            <?php foreach ($empleado as $p) : ?>
+                                <OPTION value="<?= $p['id']?>"><?= $p['name']?></OPTION>
+                            <?php endforeach; ?>
+                            </SELECT>
+                            
+                        </DIV>
                         <div class="modal-footer">
-                            <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
                             <button type="button" data-dismiss="modal" class="btn btn-danger">
                                 Cerrar
                             </button>
@@ -130,6 +149,7 @@ function encriptar($a)
             </div>
         </div>
     </div>
+   
 </body>
 
 </html>

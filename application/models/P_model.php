@@ -97,7 +97,7 @@ class P_model extends CI_Model
     public function get_tarea($id)
     {
         $sql = "SELECT id_tarea, nombre, des_tareas, stat_tarea, name, name_project from tareas, user, project 
-        WHERE tareas.id_user = user.id and tareas.id_pro = project.id and project.id = $id";
+        WHERE tareas.id_user = user.id and tareas.id_pro = project.id and project.id = $id and stat_tarea != 2";
 
         $consulta = $this->db->query($sql);
 

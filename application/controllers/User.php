@@ -39,13 +39,13 @@ class User extends CI_Controller
         $this->load->view('templates/footer');
     }
 
-    public function proyectos()
+    public function mistareas()
     {
         if ($this->session->userdata("id") != NULL) {
-            $data['title'] = 'Mis Proyectos ';
+            $data['title'] = 'Mis tareas ';
             $data['user'] = $this->db->get_where('user', ['id' =>
             $this->session->userdata('id')])->row_array();
-            /*echo 'Jorge' . $data['usuario']['nombre'];*/
+
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/topbar', $data);
@@ -53,6 +53,35 @@ class User extends CI_Controller
             $this->load->view('templates/footer');
         } else {
             redirect('error_404');
+        }
+    }
+    //Borrar proyecto empleado;
+    public function realizatarea2($id)
+    {
+        $this->load->model("p_model");
+
+        if (is_numeric($id)) {
+            redirect(base_url('user/mistareas'));
+            die();
+        }
+        $string = $id;
+        $encrypt_method = 'AES-256-CBC';
+        $secret_key = 'riju';
+        $secret_iv = 'riju';
+        $key = hash('sha256', $secret_key);
+        $iv = substr(hash('sha256', $secret_iv), 0, 16);
+        $id = openssl_decrypt(base64_decode($string), $encrypt_method, $key, 0, $iv);
+
+        if (is_numeric($id)) {
+            $eliminar = $this->p_model->realizatarea($id);
+            if ($eliminar == true) {
+                $this->session->set_flashdata('correcto', 'Proyecto eliminado correctamente');
+            } else {
+                $this->session->set_flashdata('incorrecto', 'Proyecto eliminado correctamente');
+            }
+            redirect(base_url('user/mistareas'));
+        } else {
+            redirect(base_url('user/mistareas'));
         }
     }
 }

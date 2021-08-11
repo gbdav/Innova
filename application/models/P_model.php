@@ -65,14 +65,14 @@ class P_model extends CI_Model
     public function verempleados()
     {
         //Hacemos una consulta
-        $consulta = $this->db->query("SELECT * FROM user WHERE role_id=2");
+        $consulta = $this->db->query("SELECT * FROM user WHERE role_id=2 and is_active=1");
 
         //Devolvemos el resultado de la consulta
         return $consulta->result();
     }
     public function delempleados($id)
     {
-        $consulta = $this->db->query("DELETE FROM user WHERE id='$id'");
+        $consulta = $this->db->query("UPDATE user SET is_active=0 WHERE id='$id'");
         if ($consulta == true) {
             return true;
         } else {

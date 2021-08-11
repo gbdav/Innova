@@ -44,8 +44,8 @@ function encriptar($a)
                 <thead>
                     <tr>
                         <th scope="col">Nombre</th>
-                        <th scope="col">descripcion</th>
-                        <th scope="col">status</th>
+                        <th scope="col">Descripcion</th>
+                        <th scope="col">Estado</th>
                         <th scope="col">Empleado</th>
                         <th scope="col">Proyecto</th>
                         <th scope="col" text="center">Acciones</th>

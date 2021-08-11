@@ -40,7 +40,7 @@ function encriptar($a)
                 <thead>
                     <tr>
                         <th align="center">Nombre</th>
-                        <th align="center">Correo</th>
+                        <th align="center">Correo electrónico</th>
                         <th align="center">Acciones</th>
                     </tr>
                 </thead>
@@ -61,9 +61,9 @@ function encriptar($a)
                                 <td><?php echo $fila->name ?></td>
                                 <td><?php echo $fila->email ?></td>
                                 <td align="center">
-                                    <a href="" class="btn btn-facebook btn-circle" data-toggle="tooltip" data-placement="bottom" title="Mapa">
+                                    <!--<a href="" class="btn btn-facebook btn-circle" data-toggle="tooltip" data-placement="bottom" title="Mapa">
                                         <i class="fas fa-map"></i>
-                                    </a>
+                                    </a>-->
                                     <a href="<?php echo base_url("admin/updateuser/") ?><?= encriptar($fila->id) ?>" class="btn btn-warning btn-circle" data-toggle="tooltip" data-placement="bottom" title="Editar">
                                         <i class="fas fa-edit"></i>
                                     </a>

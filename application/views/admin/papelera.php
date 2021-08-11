@@ -21,12 +21,12 @@ function encriptar($a)
 
 <body>
     <div class="container-fluid">
-        <h1 align="center" class="h1 text-gray-900 mb-4" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">Empleados</h1>
+        <h1 align="center" class="h1 text-gray-900 mb-4" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">Papelera de proyectos</h1>
 
         <div class="form-goup" align="center">
 
             <div class="form-inline">
-                <input class="form-control form-control-lg" id="searching" type="text" placeholder="Buscar empleado..." style="margin:0px auto; display:block;">
+                <input class="form-control form-control-lg" id="searching" type="text" placeholder="Buscar proyecto..." style="margin:0px auto; display:block;">
             </div>
             <br>
 
@@ -39,9 +39,10 @@ function encriptar($a)
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
-                        <th align="center">Nombre</th>
-                        <th align="center">Correo electrónico</th>
-                        <th align="center">Acciones</th>
+                        <th scope="col" align="center">Nombre</th>
+                        <th scope="col" align="center">Descripción</th>
+                        <th scope="col" align="center">Fecha</th>
+                        <th scope="col" align="center">Acciones</th>
                     </tr>
                 </thead>
                 <tbody id="info">
@@ -49,7 +50,7 @@ function encriptar($a)
                     $i = 0;
                     if ($p == 0 || $p == null) {
                     ?>
-                        <h1>No hay empleados disponibles</h1>
+                        <h1>No hay proyectos disponibles</h1>
                         <?php
                     } else {
                         foreach ($p as $fila) {
@@ -58,18 +59,15 @@ function encriptar($a)
                         ?>
 
                             <tr>
-                                <td><?php echo $fila->name ?></td>
-                                <td><?php echo $fila->email ?></td>
+                                <td align="center"><?php echo $fila->name_project ?></td>
+                                <td align="center"><?php echo $fila->description ?></td>
+                                <td align="center"><?php echo $fila->date_ini ?></td>
                                 <td align="center">
-                                    <a href="<?php echo base_url("admin/vermapauser/") ?><?= $fila->id ?>" class="btn btn-facebook btn-circle" data-toggle="tooltip" data-placement="bottom" title="Mapa">
-                                        <i class="fas fa-map"></i>
-                                    </a>
-                                    <a href="<?php echo base_url("admin/updateuser/") ?><?= encriptar($fila->id) ?>" class="btn btn-warning btn-circle" data-toggle="tooltip" data-placement="bottom" title="Editar">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-                                    <a href="<?php echo base_url("admin/delempleados/") ?><?= encriptar($fila->id) ?>" class="btn btn-danger btn-circle " data-toggle="tooltip" data-placement="bottom" title="Eliminar">
+                                    <a href="<?= base_url("admin/resproyectofinal/") ?><?= encriptar($fila->id) ?>" class="btn btn-success btn-circle" data-toggle="tooltip" data-placement="bottom" title="Restaurar proyecto">
+                                        <i class="fas fa-trash-restore-alt"></i> </a>
+                                    <a href="<?php echo base_url("admin/delproyectofinal/") ?><?= encriptar($fila->id) ?>" class="btn btn-danger btn-circle" data-toggle="tooltip" data-placement="bottom" title="Eliminar">
                                         <i class="fas fa-trash"></i>
-                                    </a>&nbsp;
+                                    </a>
                                 </td>
                             </tr>
 
@@ -97,8 +95,6 @@ function encriptar($a)
             });
         });
     </script>
-
-
 </body>
 
 </html>

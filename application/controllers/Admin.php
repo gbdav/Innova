@@ -90,7 +90,7 @@ class Admin extends CI_Controller
         $this->load->view('templates/footer');
     }
 
-    //Borrar proyecto;
+    //Borrar proyecto analogico;
     public function delproyecto($id)
     {
         $this->load->model("p_model");
@@ -109,6 +109,64 @@ class Admin extends CI_Controller
 
         if (is_numeric($id)) {
             $eliminar = $this->p_model->delproyecto($id);
+            if ($eliminar == true) {
+                $this->session->set_flashdata('correcto', 'Proyecto eliminado correctamente');
+            } else {
+                $this->session->set_flashdata('incorrecto', 'Proyecto eliminado correctamente');
+            }
+            redirect(base_url('admin/proyectos'));
+        } else {
+            redirect(base_url('admin/proyectos'));
+        }
+    }
+    //Borrar proyecto para siempre;
+    public function delproyectofinal($id)
+    {
+        $this->load->model("p_model");
+
+        if (is_numeric($id)) {
+            redirect(base_url('admin/papelera'));
+            die();
+        }
+        $string = $id;
+        $encrypt_method = 'AES-256-CBC';
+        $secret_key = 'riju';
+        $secret_iv = 'riju';
+        $key = hash('sha256', $secret_key);
+        $iv = substr(hash('sha256', $secret_iv), 0, 16);
+        $id = openssl_decrypt(base64_decode($string), $encrypt_method, $key, 0, $iv);
+
+        if (is_numeric($id)) {
+            $eliminar = $this->p_model->delproyectofinal($id);
+            if ($eliminar == true) {
+                $this->session->set_flashdata('correcto', 'Proyecto eliminado correctamente');
+            } else {
+                $this->session->set_flashdata('incorrecto', 'Proyecto eliminado correctamente');
+            }
+            redirect(base_url('admin/papelera'));
+        } else {
+            redirect(base_url('admin/papelera'));
+        }
+    }
+    //Borrar proyecto para siempre;
+    public function resproyectofinal($id)
+    {
+        $this->load->model("p_model");
+
+        if (is_numeric($id)) {
+            redirect(base_url('admin/papelera'));
+            die();
+        }
+        $string = $id;
+        $encrypt_method = 'AES-256-CBC';
+        $secret_key = 'riju';
+        $secret_iv = 'riju';
+        $key = hash('sha256', $secret_key);
+        $iv = substr(hash('sha256', $secret_iv), 0, 16);
+        $id = openssl_decrypt(base64_decode($string), $encrypt_method, $key, 0, $iv);
+
+        if (is_numeric($id)) {
+            $eliminar = $this->p_model->resproyectofinal($id);
             if ($eliminar == true) {
                 $this->session->set_flashdata('correcto', 'Proyecto eliminado correctamente');
             } else {
@@ -384,6 +442,48 @@ class Admin extends CI_Controller
             echo 'Ubicación guardada';
         } else {
             echo 'Error al guardar la ubicación';
+        }
+    }
+    public function papelera()
+    {
+        $this->load->model("p_model");
+        $data['title'] = 'Papelera de proyectos';
+        $data['user'] = $this->db->get_where('user', ['email' =>
+        $this->session->userdata('email')])->row_array();
+
+        $data["p"] = $this->p_model->papelera();
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('admin/papelera', $data);
+        $this->load->view('templates/footer');
+    }
+    function vermapauser($id)
+    {
+
+        $this->load->model("p_model");
+        $data["mod"] = $this->p_model->vermapauser($id);
+        $data['title'] = 'Ver ubicación del empleado';
+        $data['user'] = $this->db->get_where('user', ['email' =>
+        $this->session->userdata('email')])->row_array();
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view("admin/mapauser", $data);
+        $this->load->view('templates/footer');
+        if ($this->input->post("submit")) {
+            $mod = $this->p_model->vermapauser(
+                $id,
+                $this->input->post("submit"),
+                $this->input->post("name")
+            );
+            if ($mod == true) {
+                //Sesion de una sola ejecución
+                $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><strong>¡Felicidades! </strong>  <br>Empleado modificado. </div>');
+            } else {
+                $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><strong>¡Error! </strong>  <br>El empleado no fue modificado . </div>');
+            }
+            redirect(base_url('admin/usuarios/'));
         }
     }
 }

@@ -14,9 +14,35 @@ class P_model extends CI_Model
         //Devolvemos el resultado de la consulta
         return $consulta->result();
     }
+    public function papelera()
+    {
+        //Hacemos una consulta
+        $consulta = $this->db->query("SELECT * FROM project WHERE stat_pro=0");
+
+        //Devolvemos el resultado de la consulta
+        return $consulta->result();
+    }
     public function delproyecto($id)
     {
         $consulta = $this->db->query("UPDATE project SET stat_pro=0 WHERE id='$id'");
+        if ($consulta == true) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function delproyectofinal($id)
+    {
+        $consulta = $this->db->query("UPDATE project SET stat_pro=3 WHERE id='$id'");
+        if ($consulta == true) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function resproyectofinal($id)
+    {
+        $consulta = $this->db->query("UPDATE project SET stat_pro=1 WHERE id='$id'");
         if ($consulta == true) {
             return true;
         } else {
@@ -46,7 +72,7 @@ class P_model extends CI_Model
     }
     public function delempleados($id)
     {
-        $consulta = $this->db->query("UPDATE user SET role_id=0 WHERE id='$id'");
+        $consulta = $this->db->query("DELETE FROM user WHERE id='$id'");
         if ($consulta == true) {
             return true;
         } else {
@@ -131,6 +157,26 @@ class P_model extends CI_Model
             return true;
         } else {
             return false;
+        }
+    }
+
+    public function vermapauser($id, $modificar = "NULL", $name = "NULL")
+    {
+        if ($modificar == "NULL") {
+            $consulta = $this->db->query("SELECT * FROM user WHERE id=$id");
+            return $consulta->result();
+        } else {
+            $consulta = $this->db->query("
+              UPDATE user SET
+              name    ='$name'          
+               WHERE
+               id=$id;");
+
+            if ($consulta == true) {
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 }

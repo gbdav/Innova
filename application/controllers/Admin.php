@@ -16,7 +16,7 @@ class Admin extends CI_Controller
     public function index()
     {
         if ($this->session->userdata("email") != NULL) {
-            $data['title'] = 'Pagina principal';
+            $data['title'] = 'Mi perfil';
             $data['user'] = $this->db->get_where('user', ['email' =>
             $this->session->userdata('email')])->row_array();
             /*echo 'Jorge' . $data['usuario']['nombre'];*/
@@ -137,9 +137,9 @@ class Admin extends CI_Controller
 
         if ($añadir == true) {
             //Sesion de una sola ejecución
-            $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><strong>¡Felicidades! </strong>  <br>Creado. </div>');
+            $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><strong>¡Felicidades! </strong>  <br>Felicidades ya tienes un nuevo proyecto. </div>');
         } else {
-            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><strong>¡Error! </strong>  <br>No se creo. </div>');
+            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><strong>¡Error! </strong>  <br>Ounou no se creo el nuevo proyecto.</div>');
         }
 
         //redirecciono la pagina a la url por defecto
@@ -213,7 +213,7 @@ class Admin extends CI_Controller
             $mod = $this->p_model->updateuser(
                 $id,
                 $this->input->post("submit"),
-                $this->input->post("name"),
+                $this->input->post("name")
             );
             if ($mod == true) {
                 //Sesion de una sola ejecución
@@ -241,6 +241,7 @@ class Admin extends CI_Controller
         $this->load->model("p_model");
         $data['title'] = 'Tareas del proyecto';
         $data['t'] = $this->p_model->get_tarea($id);
+        $data['id'] = $id;
         $data['user'] = $this->db->get_where('user', ['email' =>
         $this->session->userdata('email')])->row_array();
         $this->load->view('templates/header', $data);
@@ -278,6 +279,67 @@ class Admin extends CI_Controller
             redirect(base_url('admin/proyectos'));
         }
     }
+
+    function addtareas($id)
+    {
+        $url = $id;
+        if (is_numeric($id)) {
+            redirect(base_url('admin/proyectos'));
+            die();
+        }
+        $encrypt_method = 'AES-256-CBC';
+        $secret_key = 'riju';
+        $secret_iv = 'riju';
+        $key = hash('sha256', $secret_key);
+        $iv = substr(hash('sha256', $secret_iv), 0, 16);
+        $id = openssl_decrypt(base64_decode($id), $encrypt_method, $key, 0, $iv);
+        $this->load->model("p_model");
+        $data['title'] = 'Crear tarea';
+        $data['t'] = $this->p_model->get_tarea($id);
+        $data['id'] = $id;
+        $data['user'] = $this->db->get_where('user', ['email' =>
+        $this->session->userdata('email')])->row_array();
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view("admin/cretareas", $data);
+        $this->load->view('templates/footer');
+    }
+
+    function cretareas()
+    {
+        $this->load->model("p_model");
+        $nombre = $this->input->post("nombre");
+        $des_tareas = $this->input->post("des_tareas");
+        $stat_tarea = 0;
+        $id_user = $this->input->post("id_user");
+        $id_pro = $this->input->post("pro");
+
+
+        $data = [
+            'nombre' => $nombre,
+            'des_tareas' => $des_tareas,
+            'stat_tarea' => $stat_tarea,
+            'id_user' => $id_user,
+            'id_pro' => $id_pro
+
+        ];
+        $añadir = $this->p_model->cretarea($data);
+
+        if ($añadir == true) {
+            //Sesion de una sola ejecución
+            $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><strong>¡Felicidades! </strong>  <br>Se creo una tarea nueva. </div>');
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><strong>¡Error! </strong>  <br>No se creo una tarea nueva. </div>');
+        }
+
+        //$url = base_url() . "admin/tareas/" . $id;
+
+        //redirecciono la pagina a la url por defecto
+        //redirect($url);
+        redirect(base_url('admin/proyectos/'));
+    }
+
 
     function mapa()
     {

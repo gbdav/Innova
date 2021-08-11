@@ -32,20 +32,20 @@ function encriptar($a)
                         <div class="form-row">
                               <div class="col">
 
-                                    <label> <i class="fas fa-hotel">&nbsp;&nbsp;&nbsp;</i>Nombre del proyecto</label>
+                                    <label> <i class="fas fa-sticky-note">&nbsp;&nbsp;&nbsp;</i>Nombre del proyecto</label>
                                     <input type="text" name="name_project" class="form-control" value="<?php echo $fila->name_project; ?>" placeholder="" required>
                               </div>
 
                               <div class="col">
 
-                                    <label><i class="fas fa-globe-americas">&nbsp;&nbsp;&nbsp;</i>Descripcion</label>
+                                    <label><i class="far fa-file-alt">&nbsp;&nbsp;&nbsp;</i>Descripcion</label>
                                     <input type="text" name="description" class="form-control" value="<?php echo $fila->description; ?>" placeholder="" required>
 
 
                               </div>
                               <div class="col">
 
-                                    <label> <i class="fas fa-hotel">&nbsp;&nbsp;&nbsp;</i>Fecha de creacion</label>
+                                    <label> <i class="far fa-calendar-alt">&nbsp;&nbsp;&nbsp;</i>Fecha de creacion</label>
                                     <input type="text" name="date_ini" class="form-control" value="<?php echo $fila->date_ini; ?>" placeholder="" readonly>
                               </div>
 

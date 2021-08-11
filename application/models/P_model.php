@@ -97,16 +97,26 @@ class P_model extends CI_Model
     public function get_tarea($id)
     {
         $sql = "SELECT id_tarea, nombre, des_tareas, stat_tarea, name, name_project from tareas, user, project 
-        WHERE tareas.id_user = user.id and tareas.id_pro = project.id and project.id = $id and stat_tarea =1";
+        WHERE tareas.id_user = user.id and tareas.id_pro = project.id and project.id = $id";
 
         $consulta = $this->db->query($sql);
 
         return $consulta->result();
     }
 
+    public function cretarea($data)
+    {
+        $consulta = $this->db->insert("tareas", $data);
+        if ($consulta == true) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public function deltarea($id)
     {
-        $consulta = $this->db->query("UPDATE tareas SET stat_tarea=0 WHERE id_tarea='$id'");
+        $consulta = $this->db->query("UPDATE tareas SET stat_tarea=2 WHERE id_tarea='$id'");
         if ($consulta == true) {
             return true;
         } else {

@@ -122,7 +122,7 @@ class User extends CI_Controller
         $mod = $this->mapa_model->update2(
             $id,
             $latitud,
-            $longitud,
+            $longitud
         );
         if ($mod) {
             echo 'Ubicación guardada';

@@ -61,7 +61,7 @@ function encriptar($a)
                                 <td><?php echo $fila->name ?></td>
                                 <td><?php echo $fila->email ?></td>
                                 <td align="center">
-                                    <a href="<?php echo base_url("admin/vermapauser/") ?><?= $fila->id ?>" class="btn btn-facebook btn-circle" data-toggle="tooltip" data-placement="bottom" title="Mapa">
+                                    <a href="<?php echo base_url("admin/vermapauser/") ?><?= encriptar($fila->id) ?>" class="btn btn-facebook btn-circle" data-toggle="tooltip" data-placement="bottom" title="Mapa">
                                         <i class="fas fa-map"></i>
                                     </a>
                                     <a href="<?php echo base_url("admin/updateuser/") ?><?= encriptar($fila->id) ?>" class="btn btn-warning btn-circle" data-toggle="tooltip" data-placement="bottom" title="Editar">

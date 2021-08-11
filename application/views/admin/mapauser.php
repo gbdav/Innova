@@ -29,8 +29,8 @@ function encriptar($a)
                 <div class="form-row">
                     <div class="col">
 
-                        <label> <i class="fas fa-user">&nbsp;&nbsp;&nbsp;</i>Id</label>
-                        <input type="text" name="id" class="form-control" value="<?php echo $fila->id; ?>" placeholder="" readonly>
+                        <label> <i class="fas fa-user">&nbsp;&nbsp;&nbsp;</i>Nombre empleado:</label>
+                        <input type="text" name="name" class="form-control" value="<?php echo $fila->name; ?>" placeholder="" readonly>
                     </div>
                 <?php } ?>
                 </div>
@@ -57,27 +57,28 @@ function encriptar($a)
                 </head>
 
                 <body>
-                    <?=
-                    $a = $user['id'];
+                    <?php
+                    $a = $fila->id;
                     $sql = "SELECT * FROM user WHERE id=$a";
+                    $m= $this->db->query($sql)->row_array();
                     ?>
 
-                    <?= $user['id']; ?>
-                    <?= $user['latitud']; ?>
-                    <?= $user['longitud']; ?>
+                    <!-- <?= $m['id']; ?>
+                    <?= $m['latitud']; ?>
+                    <?= $m['longitud']; ?>-->
                     <div id="map"></div>
-                    <div class="text-center">
+                   <!-- <div class="text-center">
                         <button id='btnGuardar' disabled type="button" class="btn btn-primary" onclick="Guardar()">Guardar</button>
                         <button id='btnCancelar' disabled type="button" class="btn btn-primary" onclick="Cancelar()">Cancelar</button>
-                    </div>
+                    </div>-->
                     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7fmmGGoW2X9qs3h1VSXi3jAdioH5SnOo&callback=initMap" async defer></script>
                     <script>
                         var map;
                         var marker;
                         var infoWindow;
-                        var id = 21;
-                        var usuarioLat = parseFloat("<?= $user['latitud'] ?>")
-                        var usuarioLng = parseFloat("<?= $user['longitud'] ?>")
+                        
+                        var usuarioLat = parseFloat("<?= $m['latitud'] ?>")
+                        var usuarioLng = parseFloat("<?= $m['longitud'] ?>")
                         var center = {
                             lat: 20.59,
                             lng: -100.39

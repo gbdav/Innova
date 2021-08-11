@@ -32,16 +32,14 @@ function encriptar($a)
                 <div class="form-row">
                     <div class="col">
 
-                        <label> <i class="fas fa-hotel">&nbsp;&nbsp;&nbsp;</i>Nombre</label>
+                        <label> <i class="fas fa-user">&nbsp;&nbsp;&nbsp;</i>Nombre</label>
                         <input type="text" name="name" class="form-control" value="<?php echo $fila->name; ?>" placeholder="" required>
                     </div>
                     <div class="col">
 
-                        <label> <i class="fas fa-hotel">&nbsp;&nbsp;&nbsp;</i>Correo electronico</label>
+                        <label><i class="fas fa-envelope">&nbsp;&nbsp;&nbsp;</i>Correo electrónico</label>
                         <input type="text" name="email" class="form-control" value="<?php echo $fila->email; ?>" placeholder="" readonly>
                     </div>
-
-
 
                 <?php } ?>
                 </div>

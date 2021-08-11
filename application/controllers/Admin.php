@@ -16,7 +16,7 @@ class Admin extends CI_Controller
     public function index()
     {
         if ($this->session->userdata("email") != NULL) {
-            $data['title'] = 'Pagina principal';
+            $data['title'] = 'Mi perfil';
             $data['user'] = $this->db->get_where('user', ['email' =>
             $this->session->userdata('email')])->row_array();
             /*echo 'Jorge' . $data['usuario']['nombre'];*/
@@ -137,9 +137,9 @@ class Admin extends CI_Controller
 
         if ($añadir == true) {
             //Sesion de una sola ejecución
-            $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><strong>¡Felicidades! </strong>  <br>Creado. </div>');
+            $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><strong>¡Felicidades! </strong>  <br>Felicidades ya tienes un nuevo proyecto. </div>');
         } else {
-            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><strong>¡Error! </strong>  <br>No se creo. </div>');
+            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><strong>¡Error! </strong>  <br>Ounou no se creo el nuevo proyecto.</div>');
         }
 
         //redirecciono la pagina a la url por defecto

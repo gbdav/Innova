@@ -44,7 +44,7 @@ function encriptar($a)
                 <thead>
                     <tr>
                         <th scope="col" align="center">Nombre</th>
-                        <th scope="col" align="center">description</th>
+                        <th scope="col" align="center">Descripción</th>
                         <th scope="col" align="center">Fecha</th>
                         <th scope="col" align="center">Acciones</th>
                     </tr>
@@ -113,10 +113,11 @@ function encriptar($a)
                     </div>
                     <form class="pro" method="post" action="<?= base_url('admin/creproyecto/'); ?>">
                         <div class="form-group">
+                            <label> &nbsp;&nbsp;&nbsp;<i class="fas fa-user">&nbsp;&nbsp;&nbsp;</i>Nombre del proyecto</label>
                             <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Escribe un nombre" required>
-
                         </div>
                         <div class="form-group">
+                            <label>&nbsp;&nbsp;&nbsp; <i class="far fa-file-alt">&nbsp;&nbsp;&nbsp;</i>Descripción</label>
                             <input type="text" id="description" name="description" class="form-control form-control-pro" placeholder="Escribe una descripcion" required>
                         </div>
                         <div class="modal-footer">

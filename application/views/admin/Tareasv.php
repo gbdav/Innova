@@ -29,12 +29,16 @@ function encriptar($a)
                 <input class="form-control form-control-lg" id="searching" type="text" placeholder="Buscar proyecto..." style="margin:0px auto; display:block;">
             </div>
             <br>
-             <!-- data-toggle="modal" data-target="#myModal"-->
-            <button type="button" class="btn btn-success btn-lg"
-             
-             >
+            <!-- data-toggle="modal" data-target="#myModal"
+            <button type="button" class="btn btn-success btn-lg">
                 <a href="<?php echo base_url("admin/addtareas/") ?><?= encriptar($id) ?>"> Nueva tarea</a>
-            </button>
+            </button>-->
+
+            <a href="<?php echo base_url("admin/addtareas/") ?><?= encriptar($id) ?>" class="btn btn-success btn-lg ">
+                <span class="icon text-white-50">
+                </span>
+                <span class="text">Nueva tarea</span>
+            </a>
             <br> <br>
             <br>
 
@@ -71,7 +75,17 @@ function encriptar($a)
                             <tr>
                                 <td scope="row"><?php echo $fila->nombre ?></td>
                                 <td><?php echo $fila->des_tareas ?></td>
-                                <td><?php echo $fila->stat_tarea ?></td>
+                                <?php
+                                if ($fila->stat_tarea == 0) {
+                                    $estado = "warning";
+                                    $p = "exclamation";
+                                }
+                                if ($fila->stat_tarea == 1) {
+                                    $estado = "success";
+                                    $p = "check";
+                                }
+                                ?>
+                                <td><button type="button" class="btn btn-<?php echo $estado ?> btn-circle"></a><i class="fas fa-<?php echo $p ?>"></i></button></td>
                                 <td><?php echo $fila->name ?></td>
                                 <td><?php echo $fila->name_project ?></td>
                                 <td>
@@ -106,8 +120,8 @@ function encriptar($a)
         });
     </script>
 
-     <!--Modal crear tareas --> 
-   <div class="container">
+    <!--Modal crear tareas -->
+    <div class="container">
         <div class="modal fade" id="myModal" role="dialog">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -123,23 +137,22 @@ function encriptar($a)
                             <input type="text" id="des_tareas" name="des_tareas" class="form-control form-control-tar" placeholder="Escribe una descripcion" required>
                         </div>
                         <div class="form-group">
-                        <LABEL><STRONG>Proyecto:</STRONG></LABEL>
-                            <input type="text" id="pro" name="pro" class="form-control form-control-tar"
-                            value="<?php echo $id ?>">
-                            
+                            <LABEL><STRONG>Proyecto:</STRONG></LABEL>
+                            <input type="text" id="pro" name="pro" class="form-control form-control-tar" value="<?php echo $id ?>">
+
                         </div>
                         <?php
                         $querytabla = "SELECT * FROM user WHERE role_id=2";
                         $empleado = $this->db->query($querytabla)->result_array();
                         ?>
-                        <DIV class="form-group form-control form-control-tar col col-md-4" action="<?= base_url('admin/get_empleados'); ?>" >
+                        <DIV class="form-group form-control form-control-tar col col-md-4" action="<?= base_url('admin/get_empleados'); ?>">
                             <LABEL><STRONG>Usuario:</STRONG></LABEL>
                             <SELECT class="form-control" id="id_user" name="id_user">
-                            <?php foreach ($empleado as $p) : ?>
-                                <OPTION value="<?= $p['id']?>"><?= $p['name']?></OPTION>
-                            <?php endforeach; ?>
+                                <?php foreach ($empleado as $p) : ?>
+                                    <OPTION value="<?= $p['id'] ?>"><?= $p['name'] ?></OPTION>
+                                <?php endforeach; ?>
                             </SELECT>
-                            
+
                         </DIV>
                         <div class="modal-footer">
                             <button type="button" data-dismiss="modal" class="btn btn-danger">
@@ -153,7 +166,7 @@ function encriptar($a)
             </div>
         </div>
     </div>
-   
+
 </body>
 
 </html>

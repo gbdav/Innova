@@ -241,7 +241,7 @@ class Admin extends CI_Controller
         $this->load->model("p_model");
         $data['title'] = 'Tareas del proyecto';
         $data['t'] = $this->p_model->get_tarea($id);
-        $data['id']= $id;
+        $data['id'] = $id;
         $data['user'] = $this->db->get_where('user', ['email' =>
         $this->session->userdata('email')])->row_array();
         $this->load->view('templates/header', $data);
@@ -280,7 +280,8 @@ class Admin extends CI_Controller
         }
     }
 
-    function addtareas($id){
+    function addtareas($id)
+    {
         $url = $id;
         if (is_numeric($id)) {
             redirect(base_url('admin/proyectos'));
@@ -295,7 +296,7 @@ class Admin extends CI_Controller
         $this->load->model("p_model");
         $data['title'] = 'Crear tarea';
         $data['t'] = $this->p_model->get_tarea($id);
-        $data['id']= $id;
+        $data['id'] = $id;
         $data['user'] = $this->db->get_where('user', ['email' =>
         $this->session->userdata('email')])->row_array();
         $this->load->view('templates/header', $data);
@@ -303,24 +304,18 @@ class Admin extends CI_Controller
         $this->load->view('templates/topbar', $data);
         $this->load->view("admin/cretareas", $data);
         $this->load->view('templates/footer');
-
     }
 
     function cretareas()
     {
-        $url = $id;
-        if (is_numeric($id)) {
-            redirect(base_url('admin/proyectos'));
-            die();
-        }
         $this->load->model("p_model");
         $nombre = $this->input->post("nombre");
         $des_tareas = $this->input->post("des_tareas");
         $stat_tarea = 0;
         $id_user = $this->input->post("id_user");
-        $id_pro= $this->input->post("pro");
+        $id_pro = $this->input->post("pro");
 
-        
+
         $data = [
             'nombre' => $nombre,
             'des_tareas' => $des_tareas,
@@ -333,18 +328,18 @@ class Admin extends CI_Controller
 
         if ($añadir == true) {
             //Sesion de una sola ejecución
-            $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><strong>¡Felicidades! </strong>  <br>Creado. </div>');
+            $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><strong>¡Felicidades! </strong>  <br>Se creo una tarea nueva. </div>');
         } else {
-            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><strong>¡Error! </strong>  <br>No se creo. </div>');
+            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible"> <button type="button" class="close" data-dismiss="alert">&times;</button><strong>¡Error! </strong>  <br>No se creo una tarea nueva. </div>');
         }
 
         //$url = base_url() . "admin/tareas/" . $id;
 
         //redirecciono la pagina a la url por defecto
         //redirect($url);
-       redirect(base_url('admin/proyectos/'));
+        redirect(base_url('admin/proyectos/'));
     }
-    
+
 
     function mapa()
     {

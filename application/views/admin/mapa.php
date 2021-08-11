@@ -61,18 +61,17 @@
             } else {
                 marker = new google.maps.Marker({
                     map: map,
+                    title: 'Ubicación de usuario'
                 });
             }
+            map.addListener("click", onMapClick);
+            marker.addListener("click", () => {
             infowindow = new google.maps.InfoWindow({
                 content: "<p>Latitud: " + marker.getPosition().lat() + "\nLongitud: " + marker.getPosition().lng() + "</p>",
             });
-            map.addListener("click", onMapClick);
-            marker.addListener("click", () => {
                 infowindow.open(map, marker);
             })
         }
-
-
 
         function onMapClick(event) {
             if (infoWindow) {
